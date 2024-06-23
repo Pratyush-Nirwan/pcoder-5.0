@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { FaCompactDisc } from "react-icons/fa6";
 
 const SpotifyRp = () => {
-    const API_KEY = 'f6d9f010ca24dc38f275af06eb7a719f';
+    const API_KEY = process.env.REACT_APP_SPOTIFY_API_KEY;
     const username = 'pratyush_nirwan';
 
     const [track, setTrack] = useState('');
