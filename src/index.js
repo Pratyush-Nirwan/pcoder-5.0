@@ -13,7 +13,7 @@ root.render(
         domain="dev-qelqekmb8fkbd0wa.us.auth0.com"
         clientId="j8LcNi5hFbxKeqOZWI0Motzy97aWy2Ib"
         authorizationParams={{
-          redirect_uri: window.location.origin
+          redirect_uri: window.location.origin + "/guestbook"
         }}
       >
         <App />
