@@ -163,12 +163,13 @@ const GuestBook = () => {
                 <div className="info-text">
                     <div className="text">
                         {!isAuthenticated ? (
+                            // Show login prompt if not authenticated
                             <div id="user-msg-div">
                                 <h5 className="text"><span className="orange-txt">~</span>/{formatString("pcoder.me")} : sign-in to leave a message!</h5>
-                                <button onClick={handleLogin} className="button text" id="login-btn" ><FaGithub size={15} /> SignIn</button>
+                                <button onClick={handleLogin} className="button text" id="login-btn"><FaGithub size={15} /> SignIn</button>
                             </div>
-
                         ) : userMessage ? (
+                            // Show user's existing message and delete/logout options
                             <div id="user-msg-div">
                                 <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} : {userMessage}</h5>
                                 <div id='delete-so-btn-div'>
@@ -176,17 +177,10 @@ const GuestBook = () => {
                                     <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
                                 </div>
                             </div>
-                        ) : !isMsgExists ? (
-                            <div id="user-msg-div">
-                                <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} : <CgSpinner size={15} className="spinner" /></h5>
-                                <div id='delete-so-btn-div'>
-                                    <TiDelete onClick={() => { handleDelete(user.nickname) }} size={20} id='delete-btn' />
-                                    <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
-                                </div>
-                            </div>
                         ) : (
+                            // Show form to submit new message
                             <div id="user-msg-div">
-                                <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} : </h5>
+                                <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} :</h5>
                                 <form onSubmit={handleSubmit} id="submit-form">
                                     <input
                                         type="text"
@@ -202,6 +196,7 @@ const GuestBook = () => {
                                 </form>
                             </div>
                         )}
+
                     </div>
                     {isLoaded ? (
                         <UpdateMessages />
