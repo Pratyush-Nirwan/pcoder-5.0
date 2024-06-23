@@ -1,0 +1,53 @@
+#user-msg-div {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+    margin-bottom: 5px;
+    gap: 7px;
+    justify-content: space-between;
+}
+
+#user-msg-div h5 {
+    flex: 0 0 auto;
+}
+
+#delete-so-btn-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.msg-div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+#btns-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: max-content;
+    flex: 1 1 auto;
+}
+
+#btns-div button {
+    width: 100%;
+}
+
+#submit-form {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-field {
+    background-color: transparent;
+    border: none;
+    color: white;
+    width: 79.5%;
+}

@@ -1,0 +1,150 @@
+.page-title-div {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    align-items: flex-start;
+    justify-content: center;
+    height: fit-content;
+}
+
+.page-title-div hr {
+    width: 100%;
+}
+
+.info-text {
+    margin-top: 20px;
+}
+
+.info-grid {
+    align-self: center;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
+
+.info-grid-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+
+.info-grid-item h5 {
+    margin-top: 5px;
+    font-weight: lighter;
+}
+
+.info-icon {
+    width: 20%;
+}
+
+.info-grid-item div {
+    width: 80%;
+}
+
+#roadmap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.milestone {
+    position: relative;
+    display: flex;
+}
+
+
+.rightSide,
+.leftSide {
+    display: flex;
+    width: max-content;
+    position: absolute;
+    flex-direction: column;
+}
+
+.rightSide {
+
+    left: 2em;
+    margin: 0;
+}
+
+.leftSide {
+
+    text-align: right;
+    right: 2em;
+    margin: 0;
+}
+
+.leftSide h6,
+.rightSide h6 {
+    font-weight: lighter;
+}
+
+.roadmap-year {
+    margin-bottom: 10px;
+}
+
+.roadmap-dot {
+    color: #ff6600;
+}
+
+.normal-hr {
+    height: 10em;
+    margin: 0;
+    border: 0;
+    border-left: 2px solid #ff6600;
+    width: unset;
+}
+
+.fading-hr {
+    height: 7em;
+    margin: 0;
+    border: 0;
+    border-left: 2px solid;
+    border-image: linear-gradient(to bottom, #ff6600, #ffffff00) 1 100%;
+    width: unset;
+}
+
+
+#latest {
+    top: 0;
+    left: 0;
+    animation: expand-blink 1s infinite;
+}
+
+#latest-circle {
+    color: #ff6600;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+@keyframes expand-blink {
+    0% {
+        color: #ff6600;
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        color: #ff6600;
+        transform: scale(2);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: scale(2);
+        color: #ff6600;
+        opacity: 0;
+    }
+
+}

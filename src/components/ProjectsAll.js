@@ -1,0 +1,20 @@
+import data from '../assets/data/projects.json'
+import { AiFillEye } from "react-icons/ai";
+const ProjectsAll = () => {
+    return (
+        <>
+            {data.projects.map((project, index) => (
+                <div className="project-div" key={index}>
+                    <div className="project-img-div">
+                        <AiFillEye className='eye' size={50} />
+                        <img className='project-img' src={require(`../assets/project_thumbnails/${project.thumbnail}`)} alt="" />
+                    </div>
+                    <h4 className='title'>{project.name}</h4>
+                    <h5 className='text'>{project.category}</h5>
+                </div>
+            ))}
+        </>
+    )
+}
+
+export default ProjectsAll;

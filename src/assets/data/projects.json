@@ -1,0 +1,70 @@
+{
+    "projects": [
+        {
+            "key": 0,
+            "name": "Advice Ticket",
+            "thumbnail": "adviceTicket.png",
+            "tags": [
+                "Web Development",
+                "react.js",
+                "advice slip json api"
+            ],
+            "path": "advice-ticket",
+            "github_link": "https://github.com/Pratyush-Nirwan/AdviceTicket",
+            "demo_link": "https://advice-ticket.vercel.app/advice",
+            "category": "Personal"
+        },
+        {
+            "key": 1,
+            "name": "EncryptDecrypt",
+            "thumbnail": "encryptDecrypt.png",
+            "tags": [
+                "Web Development",
+                "cryptojs"
+            ],
+            "path": "encryptdecrypt",
+            "github_link": "https://github.com/Pratyush-Nirwan/EncryptDecrypt",
+            "demo_link": "https://pratyush-nirwan.github.io/EncryptDecrypt",
+            "category": "Personal"
+        },
+        {
+            "key": 2,
+            "name": "Weather Website",
+            "thumbnail": "weatherWebsite.png",
+            "tags": [
+                "Web Development",
+                "open weather api"
+            ],
+            "path": "weather-website",
+            "github_link": "https://github.com/Pratyush-Nirwan/weather-website",
+            "demo_link": "https://pratyush-nirwan.github.io/weather-website/",
+            "category": "Personal"
+        },
+        {
+            "key": 3,
+            "name": "Pcoder.me",
+            "thumbnail": "pcoder.png",
+            "tags": [
+                "Web Development",
+                "React.js",
+                "portfolio",
+                "dev.to api",
+                "audioscrobbler api"
+            ],
+            "path": "pcoder",
+            "github_link": "https://github.com/Pratyush-Nirwan/Pratyush-Nirwan.github.io",
+            "category": "Personal"
+        },
+        {
+            "key": 4,
+            "name": "Pritstine Spoken English Academy Website",
+            "thumbnail": "pristineSpokenEnglish.png",
+            "tags": [
+                "Web Development"
+            ],
+            "path": "pristine-spoken-english",
+            "github_link": "",
+            "category": "Freelance"
+        }
+    ]
+}
