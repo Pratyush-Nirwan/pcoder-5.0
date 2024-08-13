@@ -149,3 +149,52 @@
     }
 
 }
+
+@media only screen and (max-width: 600px) {
+
+    .info-grid {
+        align-self: center;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-grid-item {
+        flex-direction: column;
+        padding: 10px;
+        font-size: .8em;
+        text-align: center;
+    }
+
+    #roadmap {
+        align-items: unset;
+        padding-left: 10px;
+    }
+
+    .normal-hr {
+        width: 13px;
+        transform: translateX(50%);
+    }
+
+    .fading-hr {
+        width: 13px;
+        transform: translateX(50%);
+    }
+
+    .rightSide {
+        font-size: .8em;
+        left: 2em;
+        margin: 0;
+    }
+
+    .leftSide {
+        font-size: .8em;
+        right: unset;
+        text-align: unset;
+        left: 2em;
+        margin: 0;
+    }
+
+
+
+}

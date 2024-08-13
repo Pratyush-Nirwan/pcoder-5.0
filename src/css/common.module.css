@@ -342,6 +342,14 @@ textarea:focus {
 
 @media only screen and (max-width: 600px) {
 
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .page-info {
+        padding-right: 0;
+    }
+
     #page-body {
         width: 90%;
         height: 95%;
@@ -364,6 +372,7 @@ textarea:focus {
         margin-right: unset;
         border-radius: 20px;
         border-top-right-radius: 20px;
+
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
 
