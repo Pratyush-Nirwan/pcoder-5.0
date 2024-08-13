@@ -19,7 +19,6 @@
     transition: color .1s ease;
 }
 
-
 #projects-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -72,4 +71,80 @@
 .project-div h5 {
     font-weight: lighter;
     align-self: flex-start;
+}
+
+.project-title-head {
+    font-size: xx-small;
+}
+
+.page-title {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    width: max-content;
+
+}
+
+.project-info-photo {
+    width: 80%;
+    height: auto;
+}
+
+.project-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.project-info-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.project-info-text hr {
+    width: 100%;
+}
+
+.project-info-text p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: small;
+}
+
+.tag-button-div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.tag-button-div div {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.tag-button-div div p {
+    border-bottom: 1px solid white;
+    transition: border .1s ease;
+    margin: 0;
+}
+
+.tag-button-div div p:hover {
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+}
+
+#project-btns-hr {
+    width: 100%;
+
+}
+
+#time-machine-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

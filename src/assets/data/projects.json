@@ -24,20 +24,20 @@
             ],
             "path": "encryptdecrypt",
             "github_link": "https://github.com/Pratyush-Nirwan/EncryptDecrypt",
-            "demo_link": "https://pratyush-nirwan.github.io/EncryptDecrypt",
+            "demo_link": "https://encrypt-decrypt-pcoder.vercel.app/",
             "category": "Personal"
         },
         {
             "key": 2,
-            "name": "Weather Website",
-            "thumbnail": "weatherWebsite.png",
+            "name": "Weather Wise",
+            "thumbnail": "weatherWise.png",
             "tags": [
                 "Web Development",
                 "open weather api"
             ],
-            "path": "weather-website",
-            "github_link": "https://github.com/Pratyush-Nirwan/weather-website",
-            "demo_link": "https://pratyush-nirwan.github.io/weather-website/",
+            "path": "weather-wise",
+            "github_link": "https://github.com/Pratyush-Nirwan/weather-wise",
+            "demo_link": "https://weather-wise-pcoder.vercel.app/",
             "category": "Personal"
         },
         {
@@ -60,10 +60,12 @@
             "name": "Pritstine Spoken English Academy Website",
             "thumbnail": "pristineSpokenEnglish.png",
             "tags": [
-                "Web Development"
+                "Web Development",
+                "Collaboration"
             ],
             "path": "pristine-spoken-english",
             "github_link": "",
+            "demo_link": "https://www.pristinespokenenglish.com/",
             "category": "Freelance"
         }
     ]

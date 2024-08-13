@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+
 const Menu = () => {
     const location = useLocation();
-    const path = location.pathname.replace(/^\/+/, '');
-    const [selectedItem, setSelectedItem] = useState('')
+    const [selectedItem, setSelectedItem] = useState('');
+
     useEffect(() => {
         const path = location.pathname.replace(/^\/+/, '').toUpperCase();
-        setSelectedItem(path || 'ABOUT'); // Default to 'ABOUT' if no path is present
+
+        if (path.startsWith('PROJECTS')) {
+            setSelectedItem('PROJECTS');
+        } else {
+            setSelectedItem(path || 'ABOUT');
+        }
     }, [location.pathname]);
+
     const navigate = useNavigate();
+
     const handleClick = (item) => {
         setSelectedItem(item);
-        navigate(`/${item.toLowerCase()}`)
-
+        navigate(`/${item.toLowerCase()}`);
     };
 
     return (
@@ -43,6 +50,6 @@ const Menu = () => {
             </div>
         </div>
     );
-}
+};
 
 export default Menu;

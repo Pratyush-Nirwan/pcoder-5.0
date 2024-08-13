@@ -4,6 +4,7 @@ import * as Realm from 'realm-web';
 import { useEffect, useState, useRef } from 'react';
 import { CgSpinner } from "react-icons/cg";
 import { TiDelete } from "react-icons/ti";
+import { set } from "firebase/database";
 
 const app = new Realm.App({ id: "guestbook-djqwpto" });
 
@@ -45,6 +46,8 @@ const GuestBook = () => {
                 if (exists) {
                     const userData = await getUserData(user.nickname.toLowerCase());
                     setUserMessage(userData.message);
+                    setIsMsgExists(true);
+                } else {
                     setIsMsgExists(true);
                 }
             })();
@@ -120,10 +123,9 @@ const GuestBook = () => {
                     const period = hours >= 12 ? 'PM' : 'AM';
 
                     hours = hours % 12;
-                    hours = hours ? hours : 12; // Convert midnight (0) to 12 AM
-
-                    // Construct formatted date string
-                    const formattedDate = `${month}-${day}-${year} ${hours}:${minutes} ${period}`;
+                    hours = hours ? hours : 12;
+                    hours = String(hours).padStart(2, 0);
+                    const formattedDate = `${day}-${month}-${year} ${hours}:${minutes} ${period}`;
                     if (isAuthenticated && msg.username === user.nickname.toLowerCase()) {
                         return;
                     }
@@ -165,37 +167,46 @@ const GuestBook = () => {
                         {!isAuthenticated ? (
                             // Show login prompt if not authenticated
                             <div id="user-msg-div">
-                                <h5 className="text"><span className="orange-txt">~</span>/{formatString("pcoder.me")} : sign-in to leave a message!</h5>
+                                <h5 className="text"><span className="orange-txt">~</span>/{formatString("pcoder.me")} : sign-in to leave a message! </h5>
                                 <button onClick={handleLogin} className="button text" id="login-btn"><FaGithub size={15} /> SignIn</button>
                             </div>
-                        ) : userMessage ? (
-                            // Show user's existing message and delete/logout options
+                        ) : !isMsgExists ? (
                             <div id="user-msg-div">
-                                <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} : {userMessage}</h5>
+                                <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} : <CgSpinner className="spinner" /></h5>
                                 <div id='delete-so-btn-div'>
-                                    <TiDelete onClick={() => { handleDelete(user.nickname) }} size={20} id='delete-btn' />
                                     <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
                                 </div>
                             </div>
-                        ) : (
-                            // Show form to submit new message
-                            <div id="user-msg-div">
-                                <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} :</h5>
-                                <form onSubmit={handleSubmit} id="submit-form">
-                                    <input
-                                        type="text"
-                                        value={newMessage}
-                                        onChange={(e) => setNewMessage(e.target.value)}
-                                        className="input-field text"
-                                        placeholder="Write your message here..."
-                                    />
-                                    <div id="btns-div">
-                                        <button type="submit" className="button text submit" id="submit-btn">Submit</button>
+                        )
+
+                            : userMessage ? (
+                                // Show user's existing message and delete/logout options
+                                <div id="user-msg-div">
+                                    <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} : {userMessage}</h5>
+                                    <div id='delete-so-btn-div'>
+                                        <TiDelete onClick={() => { handleDelete(user.nickname) }} size={20} id='delete-btn' />
                                         <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
                                     </div>
-                                </form>
-                            </div>
-                        )}
+                                </div>
+                            ) : (
+                                // Show form to submit new message
+                                <div id="user-msg-div">
+                                    <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} :</h5>
+                                    <form onSubmit={handleSubmit} id="submit-form">
+                                        <input
+                                            type="text"
+                                            value={newMessage}
+                                            onChange={(e) => setNewMessage(e.target.value)}
+                                            className="input-field text"
+                                            placeholder="Write your message here..."
+                                        />
+                                        <div id="btns-div">
+                                            <button type="submit" className="button text submit" id="submit-btn">Submit</button>
+                                            <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            )}
 
                     </div>
                     {isLoaded ? (
@@ -210,4 +221,3 @@ const GuestBook = () => {
 };
 
 export default GuestBook;
-//push to prod

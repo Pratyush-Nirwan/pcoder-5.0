@@ -3,6 +3,15 @@ body {
     color: white;
 }
 
+iframe {
+    position: fixed;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    border: none;
+}
+
 ::selection {
     background-color: #ff6600;
 }
@@ -46,9 +55,17 @@ hr {
     opacity: .5;
 }
 
+
+
 input:focus,
 textarea:focus {
     outline: none;
+}
+
+.tag {
+    color: #ff6600;
+    opacity: .5;
+    font-weight: bold;
 }
 
 .title {
@@ -59,7 +76,7 @@ textarea:focus {
 .text {
     font-family: "JetBrains Mono", monospace;
     margin: 0;
-    font-weight: lighters;
+    font-weight: lighter;
 }
 
 .card-outer {
@@ -88,33 +105,33 @@ textarea:focus {
 }
 
 .glass {
-    background: rgba(255, 255, 255, 0.1);
-    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 48%, rgba(255, 255, 255, 0) 100%);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(50px);
     -webkit-backdrop-filter: blur(50px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
 }
 
 .glass-nofade {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(50px);
     -webkit-backdrop-filter: blur(50px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 #profile {
     position: relative;
     display: flex;
     width: 15%;
-    height: 50%;
+    height: fit-content;
     margin: 20px;
     margin-right: 10px;
     border-radius: 20px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
+
 
 
 #info {
@@ -122,8 +139,9 @@ textarea:focus {
     display: flex;
     width: 80%;
     margin: 20px;
-    margin-left: 10px;
+    margin-left: 0px;
     border-radius: 20px;
+    border-top-left-radius: 0;
 }
 
 #dp-div {
@@ -143,6 +161,7 @@ textarea:focus {
 .contact-icons {
     display: flex;
     margin-top: 10px;
+    margin-bottom: 20px;
     gap: 10px;
     justify-content: center;
     align-items: center;
@@ -273,6 +292,13 @@ textarea:focus {
 
 .spinner {
     animation: rotate .8s infinite linear;
+}
+
+#time-machine {
+    position: absolute;
+    opacity: .5;
+    bottom: -35px;
+    left: 0;
 }
 
 @keyframes rotate {

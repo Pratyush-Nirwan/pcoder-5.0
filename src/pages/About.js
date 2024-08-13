@@ -2,6 +2,7 @@ import { MdDesignServices } from "react-icons/md";
 import { LiaDrawPolygonSolid } from "react-icons/lia";
 import { AiFillCode, AiFillVideoCamera } from "react-icons/ai";
 import { FaCircle, FaRegCircle } from "react-icons/fa";
+
 const About = () => {
     return (
         <>

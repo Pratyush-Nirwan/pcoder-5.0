@@ -1,6 +1,6 @@
 #blogs-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
@@ -24,6 +24,10 @@
 
 .blog {
     border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .blog:hover {
@@ -40,6 +44,7 @@
 }
 
 .blog-text {
+    padding: 10px;
     padding-top: 5px;
 }
 
@@ -52,6 +57,7 @@
 .blog-tag {
     color: #ff6600;
     opacity: .5;
+    font-weight: bold;
 }
 
 .blog-desc {

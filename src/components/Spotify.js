@@ -49,8 +49,9 @@ const SpotifyRp = () => {
                 truncated = truncated.slice(0, -1);
                 textElement.textContent = `${truncated}...`;
             }
+            return `${truncated}...`;
         }
-        return `${truncated}...`;
+        return `${truncated}`;
     };
 
     useEffect(() => {

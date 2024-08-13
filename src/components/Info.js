@@ -2,7 +2,6 @@
 import Menu from "./Menu";
 import Spotify from './Spotify';
 import PageRoutes from "./PageRoutes";
-
 const Info = () => {
 
 

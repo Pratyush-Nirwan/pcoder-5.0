@@ -1,10 +1,10 @@
 import DP from '../assets/dp.png'
 import { AiFillInstagram, AiFillMail, AiFillLinkedin, AiFillGithub, AiFillTwitterSquare } from "react-icons/ai";
-import { IoIosGitBranch } from "react-icons/io";
-
+import { FaCircle } from 'react-icons/fa6';
 const Href = (url) => {
     window.open(url, '_blank')
 }
+
 const Profile = () => {
     return (
         <div id="profile" className='glass card-outer'>
@@ -29,6 +29,7 @@ const Profile = () => {
                     <AiFillGithub size={25} />
                 </div>
             </div>
+
         </div>
     )
 }
