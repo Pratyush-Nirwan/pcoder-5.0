@@ -162,8 +162,8 @@ textarea:focus {
     display: flex;
     margin-top: 10px;
     margin-bottom: 20px;
-    gap: 10px;
-    justify-content: center;
+    width: 100%;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -178,6 +178,7 @@ textarea:focus {
     cursor: pointer;
     color: grey;
 }
+
 
 #menu {
     display: flex;
