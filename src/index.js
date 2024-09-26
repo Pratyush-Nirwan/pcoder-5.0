@@ -8,6 +8,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { Auth0Provider } from '@auth0/auth0-react';
 import { V1, V2, V3, V4 } from './components/Versions';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+console.log.apply(console, ["%c Designed and Coded by Pratyush Nirwan ", "color: black; background: #ff6600; padding:5px 0; border-radius: 5px; font-weight: bold",]);
+console.log("What are you doing here? Wanna see the code? Go to https://github.com/Pratyush-Nirwan/pcoder-5.0 and may be give me a star while you are there!")
 root.render(
   <React.StrictMode>
     <BrowserRouter>
