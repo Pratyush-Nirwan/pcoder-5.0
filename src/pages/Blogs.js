@@ -8,9 +8,9 @@ const Blogs = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await fetch("https://cors-anywhere.herokuapp.com/https://dev.to/api/articles?username=pratyushnirwan", {
+                const response = await fetch("https://dev.to/api/articles?username=pratyushnirwan", {
                     headers: {
-                        "api-key": API_KEY,
+                        "api-key": API_KEY, // Use the API key in the request headers
                     },
                 });
                 if (!response.ok) {
