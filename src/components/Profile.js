@@ -4,7 +4,7 @@ import { FaCircle } from 'react-icons/fa6';
 const Href = (url) => {
     window.open(url, '_blank')
 }
-
+// Hello there
 const Profile = () => {
     return (
         <div id="profile" className='glass card-outer'>

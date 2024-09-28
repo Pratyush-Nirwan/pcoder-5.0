@@ -2,17 +2,13 @@ import React, { useState, useEffect } from "react";
 import { AiFillEye } from "react-icons/ai";
 
 const Blogs = () => {
+
     const [blogs, setBlogs] = useState([]);
-    const API_KEY = "XM7ppCDYNosDjPupHKjbHjVw"; // Store your API key in an environment variable
 
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await fetch("https://dev.to/api/articles?username=pratyushnirwan", {
-                    headers: {
-                        "api-key": API_KEY, // Use the API key in the request headers
-                    },
-                });
+                const response = await fetch("https://dev.to/api/articles?username=pratyushnirwan");
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -23,7 +19,7 @@ const Blogs = () => {
             }
         };
         fetchBlogs();
-    }, [API_KEY]);
+    }, []);
 
     function href(url) {
         window.open(url, "_blank");
@@ -37,6 +33,8 @@ const Blogs = () => {
         }
     }
 
+
+    const [mostRecentBlog, ...otherBlogs] = blogs;
     return (
         <>
             <div className="page-title-div">
@@ -50,8 +48,7 @@ const Blogs = () => {
                             <div className="blog" key={blog.id} onClick={() => href(blog.url)}>
                                 <div className="overflow">
                                     <AiFillEye className='eye' size={50} />
-                                    {/* Use fallback image if cover_image is not available */}
-                                    <img className="blog-img" src={blog.cover_image || 'fallback_image_url.jpg'} alt="Blog cover" />
+                                    <img className="blog-img" src={blog.cover_image}></img>
                                 </div>
                                 <div className="blog-text">
                                     <div className="blog-tag-list">
@@ -68,7 +65,7 @@ const Blogs = () => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
 
 export default Blogs;
