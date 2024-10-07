@@ -4,7 +4,6 @@ import * as Realm from 'realm-web';
 import { useEffect, useState, useRef } from 'react';
 import { CgSpinner } from "react-icons/cg";
 import { TiDelete } from "react-icons/ti";
-import { set } from "firebase/database";
 
 const app = new Realm.App({ id: "guestbook-djqwpto" });
 
@@ -131,10 +130,13 @@ const GuestBook = () => {
                     }
                     return (
 
-                        <div className="msg-div" key={index}>
-                            <h5 className="text"><span className="orange-txt">~</span>/{formatString(msg.username)} : {msg.message}</h5>
-                            <h5 className="date text">{formattedDate}</h5>
-                        </div>
+                        <>
+                            <hr id="mb-hr" />
+                            <div className="msg-div" key={index}>
+                                <h5 className="text"><span className="orange-txt">~</span>/{formatString(msg.username)}<span id='dots'> : </span><br id="mb-br" /> {msg.message}</h5>
+                                <h5 className="date text">{formattedDate}</h5>
+                            </div>
+                        </>
                     );
                 })}
             </>
@@ -167,12 +169,12 @@ const GuestBook = () => {
                         {!isAuthenticated ? (
                             // Show login prompt if not authenticated
                             <div id="user-msg-div">
-                                <h5 className="text"><span className="orange-txt">~</span>/{formatString("pcoder.me")} : sign-in to leave a message! </h5>
+                                <h5 className="text"><span className="orange-txt">~</span>/{formatString("pcoder.me")}<span id='dots'> : </span><br id="mb-br" /> sign-in to leave a message! </h5>
                                 <button onClick={handleLogin} className="button text" id="login-btn"><FaGithub size={15} /> SignIn</button>
                             </div>
                         ) : !isMsgExists ? (
                             <div id="user-msg-div">
-                                <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} : <CgSpinner className="spinner" /></h5>
+                                <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())}<span id='dots'> : </span><br id="mb-br" /><CgSpinner className="spinner" /></h5>
                                 <div id='delete-so-btn-div'>
                                     <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
                                 </div>

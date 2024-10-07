@@ -39,6 +39,8 @@ const Projects = () => {
                         <h3 className={selectedItem === 'freelance' ? 'text selected' : 'text'} onClick={() => handleClick('freelance')}>Freelance</h3>
                         <hr id="project-btns-hr" />
                         <h3 id="time-machine-btn" className={selectedItem === 'rewind' ? 'text selected' : 'text'} onClick={() => handleClick('rewind')}>Rewind <FaClockRotateLeft id="rewind" /></h3>
+                        <hr id="project-btns-hr-mb" />
+
                     </div>
                     <div id="projects-grid">
                         {selectedItem === 'all' && <ProjectsAll />}

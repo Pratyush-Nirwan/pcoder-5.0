@@ -27,17 +27,6 @@
     margin-bottom: 5px;
 }
 
-#btns-div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: max-content;
-    flex: 1 1 auto;
-}
-
-#btns-div button {
-    width: 100%;
-}
 
 #submit-form {
     flex: 1 1 auto;
@@ -50,4 +39,44 @@
     border: none;
     color: white;
     width: 79.5%;
+}
+
+#mb-br,
+#mb-hr {
+    display: none;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .date {
+        display: none;
+    }
+
+    .msg-div,
+    #user-msg-div {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .msg-div h5,
+    #user-msg-div h5 {
+        line-height: 20px;
+    }
+
+    #mb-br,
+    #mb-hr {
+        display: block;
+    }
+
+    #dots {
+        display: none;
+    }
+
+    #mb-hr {
+        width: 100%;
+    }
+
+    .button {
+        width: 100%;
+    }
 }
