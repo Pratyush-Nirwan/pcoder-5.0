@@ -12,6 +12,18 @@
     flex: 0 0 auto;
 }
 
+#btns-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: max-content;
+    flex: 1 1 auto;
+}
+
+#btns-div button {
+    width: 100%;
+}
+
 #delete-so-btn-div {
     display: flex;
     align-items: center;
@@ -77,6 +89,14 @@
     }
 
     .button {
+        width: 100%;
+    }
+
+    #btns-div {
+        width: 100%;
+    }
+
+    #delete-so-btn-div {
         width: 100%;
     }
 }

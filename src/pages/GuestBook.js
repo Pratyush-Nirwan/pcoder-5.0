@@ -184,7 +184,7 @@ const GuestBook = () => {
                             : userMessage ? (
                                 // Show user's existing message and delete/logout options
                                 <div id="user-msg-div">
-                                    <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} : {userMessage}</h5>
+                                    <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())}<span id='dots'> : </span><br id="mb-br" />{userMessage}</h5>
                                     <div id='delete-so-btn-div'>
                                         <TiDelete onClick={() => { handleDelete(user.nickname) }} size={20} id='delete-btn' />
                                         <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
@@ -193,7 +193,7 @@ const GuestBook = () => {
                             ) : (
                                 // Show form to submit new message
                                 <div id="user-msg-div">
-                                    <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())} :</h5>
+                                    <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())}<span id='dots'> : </span></h5>
                                     <form onSubmit={handleSubmit} id="submit-form">
                                         <input
                                             type="text"
