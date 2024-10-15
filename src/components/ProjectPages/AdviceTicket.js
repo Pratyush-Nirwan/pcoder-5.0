@@ -8,7 +8,7 @@ const AdviceTicket = () => {
     }
     const project = data.projects.find(project => project.name === "Advice Ticket");
 
-    // Access the tags array of the "Advice Ticket" project
+
     const projectTags = project.tags;
     return (
         <>
@@ -28,7 +28,7 @@ const AdviceTicket = () => {
                                         <span key={index} className="tag">#{tag.replace(/ /g, "-").toLowerCase()}</span>
                                     ))}
                                 </p>
-                                <div className="text">
+                                <div className="text buttons-div">
                                     <p onClick={() => { href(project.github_link) }}>Github</p>
                                     <p onClick={() => { href(project.demo_link) }}>Preview</p>
                                 </div>

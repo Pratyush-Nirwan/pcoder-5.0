@@ -179,9 +179,23 @@
         max-height: 100%;
     }
 
-    .page-info,
-    .info-text {
-        overflow-y: hidden;
-        height: 100%;
+    .tag-button-div {
+        flex-direction: column;
+        align-items: baseline;
+        gap: 5px;
     }
+
+    .tag-button-div p {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .tag {
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+
+    }
+
 }

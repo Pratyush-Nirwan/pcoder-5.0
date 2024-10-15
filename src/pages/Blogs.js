@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AiFillEye } from "react-icons/ai";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import { setCookie } from "../utils/cookieUtils";
 
 const Blogs = () => {
 
@@ -34,9 +36,16 @@ const Blogs = () => {
     }
 
 
-    const [mostRecentBlog, ...otherBlogs] = blogs;
+    setCookie("page", "blogs");
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <meta name="title" content="Pratyush Nirwan" />
+                    <meta name="description"
+                        content="Explore a world where coding meets comedy! Dive into my blog filled with hilarious anecdotes and fascinating insights into the world of programming. Laugh, learn, and level up your coding skills with me today!" />
+                </Helmet>
+            </HelmetProvider>
             <div className="page-title-div">
                 <h1 className="title page-title">Blogs</h1>
                 <hr />

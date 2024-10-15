@@ -339,7 +339,34 @@ textarea:focus {
     transition: opacity 300ms;
 }
 
+#ham-div {
+    display: none;
+}
+
 @media only screen and (max-width: 600px) {
+
+    #ham-div {
+        display: flex;
+        position: relative;
+    }
+
+    #ham-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    #ham-menu {
+        font-size: 2em;
+        position: absolute;
+        left: 32px;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
 
     ::-webkit-scrollbar {
         display: none;

@@ -4,10 +4,15 @@ import * as Realm from 'realm-web';
 import { useEffect, useState, useRef } from 'react';
 import { CgSpinner } from "react-icons/cg";
 import { TiDelete } from "react-icons/ti";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import { setCookie } from "../utils/cookieUtils";
 
 const app = new Realm.App({ id: "guestbook-djqwpto" });
 
 const GuestBook = () => {
+
+    setCookie("page", "guestbook");
+
     const { loginWithRedirect, logout, user, isAuthenticated, isLoading } = useAuth0();
 
     const handleLogin = () => {
@@ -108,6 +113,7 @@ const GuestBook = () => {
         const orderedMessages = messages.slice().reverse()
         return (
             <>
+
                 {orderedMessages.map((msg, index) => {
                     // Convert ISO 8601 date string to Date object
                     const date = new Date(msg.date);
@@ -158,6 +164,13 @@ const GuestBook = () => {
 
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <meta name="title" content="Pratyush Nirwan" />
+                    <meta name="description"
+                        content="Leave a public message for all to see!" />
+                </Helmet>
+            </HelmetProvider>
             <div className="page-title-div">
                 <h1 className="title page-title">Guestbook</h1>
                 <hr />
@@ -167,7 +180,6 @@ const GuestBook = () => {
                 <div className="info-text">
                     <div className="text">
                         {!isAuthenticated ? (
-                            // Show login prompt if not authenticated
                             <div id="user-msg-div">
                                 <h5 className="text"><span className="orange-txt">~</span>/{formatString("pcoder.me")}<span id='dots'> : </span><br id="mb-br" /> sign-in to leave a message! </h5>
                                 <button onClick={handleLogin} className="button text" id="login-btn"><FaGithub size={15} /> SignIn</button>
@@ -182,7 +194,6 @@ const GuestBook = () => {
                         )
 
                             : userMessage ? (
-                                // Show user's existing message and delete/logout options
                                 <div id="user-msg-div">
                                     <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())}<span id='dots'> : </span><br id="mb-br" />{userMessage}</h5>
                                     <div id='delete-so-btn-div'>
@@ -191,7 +202,6 @@ const GuestBook = () => {
                                     </div>
                                 </div>
                             ) : (
-                                // Show form to submit new message
                                 <div id="user-msg-div">
                                     <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())}<span id='dots'> : </span></h5>
                                     <form onSubmit={handleSubmit} id="submit-form">

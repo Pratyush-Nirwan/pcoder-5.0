@@ -2,10 +2,20 @@ import { MdDesignServices } from "react-icons/md";
 import { LiaDrawPolygonSolid } from "react-icons/lia";
 import { AiFillCode, AiFillVideoCamera } from "react-icons/ai";
 import { FaCircle, FaRegCircle } from "react-icons/fa";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import { setCookie } from "../utils/cookieUtils";
 
 const About = () => {
+    setCookie("page", "about");
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <meta name="title" content="Pratyush Nirwan" />
+                    <meta name="description"
+                        content="Get to know the person behind this website - delve into Pratyush's background, interests, and passions." />
+                </Helmet>
+            </HelmetProvider>
             <div className="page-title-div">
                 <h1 className="title page-title">About</h1>
                 <hr />

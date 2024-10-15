@@ -5,8 +5,13 @@ import ProjectsPersonal from "../components/ProjectPersonal";
 import ProjectsFreelance from "../components/ProjectsFreelance";
 import Rewind from "../components/Rewind";
 import { FaClockRotateLeft } from "react-icons/fa6";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import { setCookie } from "../utils/cookieUtils";
 
 const Projects = () => {
+
+    setCookie("page", "projects");
+
     const location = useLocation();
     const navigate = useNavigate();
     const [selectedItem, setSelectedItem] = useState('all');
@@ -27,6 +32,13 @@ const Projects = () => {
 
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <meta name="title" content="Pratyush Nirwan" />
+                    <meta name="description"
+                        content="Discover a showcase of Pratyush's diverse and innovative projects, spanning personal endeavors to professional achievements." />
+                </Helmet>
+            </HelmetProvider>
             <div className="page-title-div">
                 <h1 className="title page-title">Projects</h1>
                 <hr />
