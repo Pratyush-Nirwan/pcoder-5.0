@@ -1,0 +1,29 @@
+[
+    {
+        "name": "Encrypt Decrypt",
+        "overview": "Encrypt and decrypt text messages easily.",
+        "tech_stack": "React, JavaScript, HTML5",
+        "links": {
+            "github": "https://github.com/Pratyush-Nirwan/EncryptDecrypt",
+            "demo": "https://encrypt-decrypt-pcoder.vercel.app/"
+        }
+    },
+    {
+        "name": "Weather Wise",
+        "overview": "Responsive app showing live weather data.",
+        "tech_stack": "React, JavaScript, HTML5, CSS3, Weather API",
+        "links": {
+            "github": "https://github.com/Pratyush-Nirwan/weather-wise",
+            "demo": "https://weather-wise-pcoder.vercel.app/"
+        }
+    },
+    {
+        "name": "Advice Ticket",
+        "overview": "Random advice displayed with unique ID.",
+        "tech_stack": "React, JavaScript, HTML5, Advice Slip API",
+        "links": {
+            "github": "https://github.com/Pratyush-Nirwan/Advice-Ticket",
+            "demo": "https://advice-ticket.vercel.app/"
+        }
+    }
+]

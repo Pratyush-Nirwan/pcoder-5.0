@@ -1,11 +1,16 @@
 import '../../App.css';
-import MeshGradient from '../MeshGradient';
+import MeshGradient from '../../assets/MeshGradient';
 import Menu from '../Menu';
+import ProjectTree from '../Projects';
+import BlogTree from '../Blogs';
+import SpotifyRp from '../SpotifyRp';
+import Skills from '../Skills';
 import { useState } from 'react';
 import { FaCompactDisc } from "react-icons/fa";
 import { IoPinSharp } from "react-icons/io5";
 function Home() {
     const [selectedPage, setSelectedPage] = useState('home');
+    const [view, setView] = useState('projects');
 
     return (
         <>
@@ -47,16 +52,25 @@ function Home() {
                             MARATHI
                         </div>
                     </h1>
-                    <div
-                        id='circle'
-                        className={selectedPage}
-                    >
-                        <MeshGradient id="gradient-circle" seed={2} frequency={[0.0001, 0.000]} />
-                        <FaCompactDisc id='disc' size={100} />
-                        <IoPinSharp id='pin' size={70} />
+                    <Skills />
+                    <div className={"projects-blogs-btns-con " + selectedPage}>
+
+                        <div id='btns-con'>
+                            <div id="projects-btn" onClick={() => setView('projects')} className={view === 'projects' ? 'selected' : ''}>Projects</div>
+                            <div id="blogs-btn" onClick={() => setView('blogs')} className={view === 'blogs' ? 'selected' : ''}>Blogs</div>
+                        </div>
+                        <div className="projects-blogs-con">
+                            {view === 'projects' && <ProjectTree />}
+                            {view === 'blogs' && <BlogTree />}
+                        </div>
                     </div>
+                    <SpotifyRp selectedPage={selectedPage} />
+
+
                 </div>
-            </div>
+
+
+            </div >
             <Menu setSelectedPage={setSelectedPage} selectedPage={selectedPage} />
         </>
     );

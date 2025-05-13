@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap');
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 body,
 html {
   background-color: black;
@@ -58,7 +62,7 @@ html {
 #right-part.works {
   height: 30vh;
   width: 60vw;
-  transform: translateY(70vh) translateX(-10vw);
+  transform: translateY(80vh) translateX(-10vw);
 }
 
 #right-part.guestbook {
@@ -107,7 +111,7 @@ html {
 }
 
 .page-num.about {
-  transform: translateY(calc(-100vh + 300px));
+  transform: translateY(0) translateX(25vw);
 }
 
 .page-num.guestbook {
@@ -130,6 +134,10 @@ html {
 .reveal-text.about {
   font-size: 0.9em;
   font-weight: normal;
+}
+
+.reveal-text.works {
+  transform: translateY(-50vh);
 }
 
 .reveal-text.guestbook {
@@ -165,32 +173,6 @@ html {
   transform: translateX(35vw) translateY(-23vh);
 }
 
-#circle {
-  transition: transform 1s ease;
-}
-
-#circle.about {
-  transform: translateX(-40vw);
-
-}
-
-#circle.works {
-  transform: translateY(-40vh);
-}
-
-#circle.guestbook {
-  transform: translateY(5vh) translateX(-80vw);
-}
-
-#circle {
-  position: fixed;
-  height: 10em;
-  width: 10em;
-  border-radius: 50%;
-  right: 50px;
-  bottom: 10%;
-  overflow: hidden;
-}
 
 .menu {
   position: absolute;
@@ -222,7 +204,64 @@ html {
   list-style-type: disc;
 }
 
+.music-player {
+  transition: transform 1s ease;
+}
 
+.music-player.about {
+  transform: translateX(-40vw);
+
+}
+
+.music-player.works {
+  transform: translateY(-40vh);
+}
+
+.music-player.guestbook {
+  transform: translateY(5vh) translateX(-80vw);
+}
+
+.music-player {
+  position: fixed;
+  right: 50px;
+  bottom: 10%;
+}
+
+#circle {
+  overflow: hidden;
+  border-radius: 50%;
+  height: 10em;
+  width: 10em;
+}
+
+
+.curved-text {
+  position: absolute;
+  top: 60%;
+  left: 60%;
+  scale: 1.2;
+  width: 10em;
+  height: 10em;
+  pointer-events: none;
+  animation: rotation 5s reverse linear infinite;
+}
+
+.music-player text {
+  fill: black;
+  transition: fill 1s ease;
+}
+
+.music-player.about text {
+  fill: white;
+}
+
+.music-player.works text {
+  fill: white;
+}
+
+.music-player.guestbook text {
+  fill: white;
+}
 
 #disc {
   position: absolute;
@@ -239,13 +278,6 @@ html {
   left: 50%;
   transform: translateX(10%) translateY(-80%) rotate(20deg);
   mix-blend-mode: difference;
-}
-
-#test {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
 }
 
 .lang {
@@ -266,6 +298,110 @@ html {
   transform: translateY(0%);
 }
 
+.projects-blogs-btns-con {
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  height: 20vw;
+  position: absolute;
+  top: 30%;
+  right: 20%;
+  transition: opacity 1s ease, transform 1s ease;
+  opacity: 0;
+  transform: translateX(-100%);
+  border: 2px solid white;
+}
+
+.projects-blogs-con {
+  display: flex;
+  overflow: scroll;
+}
+
+.projects-blogs-btns-con.works {
+  opacity: 1;
+  transform: translateX(0%);
+}
+
+.project-blog-name {
+  font-weight: bolder;
+}
+
+.features {
+  color: grey;
+  font-weight: lighter;
+}
+
+#btns-con {
+  z-index: 99;
+  display: flex;
+
+}
+
+#projects-btn,
+#blogs-btn {
+  padding: 10px;
+  border: 1px solid white;
+  border-bottom: 2px solid white;
+  width: 100%;
+  height: fit-content;
+  text-align: center;
+  cursor: pointer;
+}
+
+#projects-btn:hover,
+#blogs-btn:hover {
+  background-color: grey;
+}
+
+#projects-btn.selected,
+#blogs-btn.selected {
+  background-color: white;
+  color: black;
+}
+
+.project-display,
+.blog-display {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  line-height: 18.5px;
+  font-size: 1em;
+  white-space: pre;
+  gap: 1px;
+  padding: 20px;
+}
+
+.skills-grid {
+  z-index: 99;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(10px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+  width: 20vw;
+  scale: .7;
+  position: absolute;
+  bottom: 65%;
+  left: 2%;
+  mix-blend-mode: difference;
+}
+
+.skill-icon {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  align-items: center;
+  color: white;
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+.skill-icon:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
 
 
 @keyframes rotation {
