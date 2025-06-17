@@ -24,7 +24,7 @@ const Skills = ({ selectedPage }) => {
     ];
 
     return (
-        <div className="skills-grid">
+        <div className={"skills-grid " + selectedPage}>
             {skills.map((icon, index) => (
                 <div className="skill-icon" key={index}>
                     {icon}

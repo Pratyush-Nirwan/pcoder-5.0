@@ -5,10 +5,10 @@ import { useEffect, useState, useRef } from 'react';
 import { CgSpinner } from "react-icons/cg";
 import { TiDelete } from "react-icons/ti";
 import { setCookie, getCookie, deleteCookie } from "../assets/functions/cookieUtils";
-
+import React from "react";
 const app = new Realm.App({ id: "guestbook-djqwpto" });
 
-function GuestBook() {
+function GuestBook({ selectedPage }) {
     setCookie("page", "guestbook");
 
     const { loginWithRedirect, logout, user, isAuthenticated, isLoading } = useAuth0();
@@ -25,11 +25,11 @@ function GuestBook() {
         });
     };
 
-    function formatString(str) {
-        if (str.length > 15) {
+    function formatString(str, len) {
+        if (str.length > len) {
             return str.substring(0, 12) + '...';
         } else {
-            return str.padEnd(15, '\u00A0');
+            return str.padEnd(len, '\u00A0');
         }
     }
 
@@ -126,16 +126,15 @@ function GuestBook() {
                     hours = String(hours).padStart(2, 0);
                     const formattedDate = `${day}-${month}-${year} ${hours}:${minutes} ${period}`;
                     if (isAuthenticated && msg.username === user.nickname.toLowerCase()) {
-                        return;
+                        return null;
                     }
                     return (
-                        <>
-                            <hr id="mb-hr" />
-                            <div className="msg-div" key={index}>
-                                <h5 className="text"><span className="orange-txt">~</span>/{formatString(msg.username)}<span id='dots'> : </span><br id="mb-br" /> {msg.message}</h5>
+                        <React.Fragment key={index}>
+                            <div className="msg-div">
+                                <h5 className="name-msg"><span className="name">~/{formatString(msg.username, 15)}:</span>{formatString("\u00A0" + msg.message, 50)}</h5>
                                 <h5 className="date text">{formattedDate}</h5>
                             </div>
-                        </>
+                        </React.Fragment>
                     );
                 })}
             </>
@@ -154,66 +153,56 @@ function GuestBook() {
     };
 
     return (
-        <>
+        <div className={"guestbook-table " + selectedPage}>
+            <div className="text">
+                {!isAuthenticated ? (
+                    <div id="user-msg-div">
+                        <h5 className="name-msg"><span className="name">~/{formatString("pcoder.me", 15)} : </span> sign-in to leave a message! </h5>
+                        <button onClick={handleLogin} className="button text" id="login-btn"><FaGithub size={15} /> SignIn</button>
+                    </div>
+                ) : !isMsgExists ? (
+                    <div id="user-msg-div">
+                        <h5 className="name-msg"><span className="name">~/{formatString(user.nickname.toLowerCase(), 15)}: </span><CgSpinner className="spinner" /></h5>
+                        <div id='delete-so-btn-div'>
+                            <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
+                        </div>
+                    </div>
+                )
 
-            <div className="page-title-div">
-                <h1 className="title page-title">Guestbook</h1>
-                <hr />
-            </div>
-
-            <div className="page-info">
-                <div className="info-text">
-                    <div className="text">
-                        {!isAuthenticated ? (
-                            <div id="user-msg-div">
-                                <h5 className="text"><span className="orange-txt">~</span>/{formatString("pcoder.me")}<span id='dots'> : </span><br id="mb-br" /> sign-in to leave a message! </h5>
-                                <button onClick={handleLogin} className="button text" id="login-btn"><FaGithub size={15} /> SignIn</button>
+                    : userMessage ? (
+                        <div id="user-msg-div">
+                            <h5 className="name-msg"><span className="name" >~/{formatString(user.nickname.toLowerCase(), 15)}: </span>{formatString("\u00A0" + userMessage, 50)}</h5>
+                            <div id='delete-so-btn-div'>
+                                <TiDelete onClick={() => { handleDelete(user.nickname) }} size={30} id='delete-btn' />
+                                <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
                             </div>
-                        ) : !isMsgExists ? (
-                            <div id="user-msg-div">
-                                <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())}<span id='dots'> : </span><br id="mb-br" /><CgSpinner className="spinner" /></h5>
-                                <div id='delete-so-btn-div'>
+                        </div>
+                    ) : (
+                        <div id="user-msg-div">
+                            <h5 className="name-msg"><span className="name" >~/{formatString(user.nickname.toLowerCase(), 15)}: </span></h5>
+                            <form onSubmit={handleSubmit} id="submit-form">
+                                <input
+                                    type="text"
+                                    value={newMessage}
+                                    onChange={(e) => setNewMessage(e.target.value)}
+                                    className="input-field text"
+                                    placeholder="Write your message here..."
+                                />
+                                <div id="btns-div">
+                                    <button type="submit" className="button text submit" id="submit-btn">Submit</button>
                                     <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
                                 </div>
-                            </div>
-                        )
-
-                            : userMessage ? (
-                                <div id="user-msg-div">
-                                    <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())}<span id='dots'> : </span><br id="mb-br" />{userMessage}</h5>
-                                    <div id='delete-so-btn-div'>
-                                        <TiDelete onClick={() => { handleDelete(user.nickname) }} size={20} id='delete-btn' />
-                                        <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
-                                    </div>
-                                </div>
-                            ) : (
-                                <div id="user-msg-div">
-                                    <h5 className="text"><span className="orange-txt">~</span>/{formatString(user.nickname.toLowerCase())}<span id='dots'> : </span></h5>
-                                    <form onSubmit={handleSubmit} id="submit-form">
-                                        <input
-                                            type="text"
-                                            value={newMessage}
-                                            onChange={(e) => setNewMessage(e.target.value)}
-                                            className="input-field text"
-                                            placeholder="Write your message here..."
-                                        />
-                                        <div id="btns-div">
-                                            <button type="submit" className="button text submit" id="submit-btn">Submit</button>
-                                            <button onClick={handleLogout} className="button text" id="logout-btn">SignOut</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            )}
-
-                    </div>
-                    {isLoaded ? (
-                        <UpdateMessages />
-                    ) : (
-                        <CgSpinner size={20} className="spinner" />
+                            </form>
+                        </div>
                     )}
-                </div>
+
             </div>
-        </>
+            {isLoaded ? (
+                <UpdateMessages />
+            ) : (
+                <CgSpinner size={20} className="spinner" />
+            )}
+        </div>
     );
 }
 

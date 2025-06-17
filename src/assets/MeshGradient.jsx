@@ -1,27 +1,50 @@
 import React, { useEffect } from "react";
 import { Gradient } from "../assets/Gradient";
 
+const initializedGradients = new Set();
+
 function MeshGradient({ id, seed }) {
     useEffect(() => {
-        const gradient = new Gradient();
-        gradient.initGradient(`#${id}`);
+        const attemptInit = () => {
+            const canvas = document.getElementById(id);
 
-        function generateRandomFrequency() {
+            // Retry if canvas is not ready or has 0 width/height
+            if (!canvas || canvas.offsetWidth === 0 || canvas.offsetHeight === 0) {
+                console.warn(`⏳ Waiting for canvas #${id} to be ready...`);
+                setTimeout(attemptInit, 100); // Retry in 100ms
+                return;
+            }
+
+            // Skip if already initialized
+            if (initializedGradients.has(id)) {
+                console.log(`🟡 MeshGradient: Already initialized for #${id}`);
+                return;
+            }
+
+            const gradient = new Gradient();
+            gradient.initGradient(`#${id}`);
+
             const min = 0.0001;
             const max = 0.0005;
-            const randomValue = Math.random() * (max - min) + min;
-            return parseFloat(randomValue.toFixed(4)); // Round to 4 decimal places
-        }
-        const frequency = [generateRandomFrequency(), generateRandomFrequency()];
+            const freqX = parseFloat((Math.random() * (max - min) + min).toFixed(4));
+            const freqY = parseFloat((Math.random() * (max - min) + min).toFixed(4));
 
+            gradient.seed = seed;
+            gradient.freqX = freqX;
+            gradient.freqY = freqY;
+            gradient.play();
 
-        gradient.seed = seed;
-        gradient.freqX = frequency[0];
-        gradient.freqY = frequency[1];
-        gradient.play();
-        console.log(`Gradient id: ${id} initialized`);
+            initializedGradients.add(id);
+            console.log(`✅ MeshGradient initialized for #${id}`);
+        };
 
-        return () => gradient.pause(); // Cleanup on unmount
+        attemptInit();
+
+        // Cleanup is optional if you want to stop animation
+        return () => {
+            console.log(`🛑 MeshGradient cleanup for #${id}`);
+
+        };
     }, [id, seed]);
 
     return (
@@ -36,7 +59,8 @@ function MeshGradient({ id, seed }) {
                     height: "100%",
                     "--gradient-color-1": "#dca8d8",
                     "--gradient-color-2": "#a3d3f9",
-                    "--gradient-color-3": "#fcd6d6",
+                    "--gradient-color-3": "#fcd6d6"
+
                 }}
             />
         </div>

@@ -14,6 +14,10 @@ html {
   width: 100vw;
 }
 
+* {
+  font-family: "DM Mono", monospace;
+}
+
 #bg-main {
   position: fixed;
   display: flex;
@@ -115,7 +119,7 @@ html {
 }
 
 .page-num.guestbook {
-  transform: translateY(-30vh) translateX(75vw);
+  transform: translateY(-30vh) translateX(-0vw);
 }
 
 
@@ -190,7 +194,14 @@ html {
   cursor: pointer;
   mix-blend-mode: difference;
   transition: color 1s ease;
+  text-align: right;
 }
+
+.menu li svg {
+  vertical-align: middle;
+}
+
+
 
 .menu li.works {
   color: white;
@@ -290,12 +301,12 @@ html {
   width: 20%;
   opacity: 0;
   transition: opacity 1s ease, transform 1s ease;
-  transform: translateY(-100%);
+  transform: translateX(-100%);
 }
 
 .lang.about {
   opacity: 1;
-  transform: translateY(0%);
+  transform: translateX(0%);
 }
 
 .projects-blogs-btns-con {
@@ -386,6 +397,14 @@ html {
   bottom: 65%;
   left: 2%;
   mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 1s ease, transform 1s ease;
+  transform: translateX(-100%);
+}
+
+.skills-grid.about {
+  opacity: 1;
+  transform: translateX(0%);
 }
 
 .skill-icon {
@@ -403,6 +422,126 @@ html {
   cursor: pointer;
 }
 
+.guestbook-table {
+  opacity: 0;
+  position: fixed;
+  border-top: 2px solid white;
+
+  width: 70vw;
+  height: 70vh;
+  padding: 20px;
+  top: 20%;
+  left: 20%;
+  mix-blend-mode: difference;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 1s ease, transform 1s ease;
+  transform: translateX(100vh);
+}
+
+.guestbook-table.guestbook {
+  opacity: 1;
+  transform: translate(0vh);
+}
+
+.msg-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.msg-div h5 {
+  margin: 5px;
+}
+
+.name-msg {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-field {
+  display: flex;
+  width: max-content;
+  outline: none;
+  border: 1px solid white;
+  height: 25px;
+}
+
+#submit-form {
+  display: flex;
+  align-items: center;
+}
+
+#delete-btn {
+  cursor: pointer;
+}
+
+#delete-btn:hover {
+  opacity: .5;
+}
+
+#user-msg-div {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#user-msg-div h5 {
+  margin: 5px;
+}
+
+#submit-form {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+#btns-div {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: end;
+  gap: 20px;
+}
+
+button {
+  display: flex;
+  gap: 5px;
+  height: fit-content;
+  padding: 5px;
+  border-radius: o;
+  border: 1px solid white;
+  background-color: white;
+  color: black;
+  outline: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  border: 1px solid white;
+  background-color: transparent;
+  color: white;
+}
+
+#delete-so-btn-div {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 20px;
+}
+
+.date {
+  display: flex;
+  width: 200px;
+}
+
+.spinner {
+  animation: spinner 5s linear infinite;
+}
 
 @keyframes rotation {
   0% {
@@ -412,4 +551,109 @@ html {
   100% {
     transform: translateX(-50%) translateY(-50%) rotate(360deg);
   }
+}
+
+@keyframes spinner {
+  0% {
+    rotate: 0deg;
+  }
+
+  100% {
+    rotate: 360deg
+  }
+}
+
+@media only screen and (max-width: 600px) {
+
+  #left-part {
+    width: 100vw;
+    height: 200%;
+    transform: translateX(-62%);
+    top: 0;
+    z-index: 2;
+    rotate: 45deg;
+  }
+
+  #right-part {
+    width: 100vw;
+    height: 100vh;
+    right: 0;
+    overflow: hidden;
+    transition: all 1s ease;
+    transform: translateY(0) translateX(0);
+  }
+
+  #top-text {
+    font-size: .7em;
+    position: fixed;
+    top: 5vh;
+    left: 50vw;
+    transform-origin: center;
+    transform: translateX(-50%);
+  }
+
+  .reveal-text {
+    top: 12vh;
+    left: 50vw;
+    width: 90vw;
+    transform: translateX(-50%) translateY(0%);
+    font-size: 12vw;
+  }
+
+  .page-num {
+    position: absolute;
+    margin: 0;
+    font-size: 3em;
+    bottom: 100px;
+    top: unset;
+    transform: translateX(45vw) translateY(10vh);
+    transition: transform 1s ease;
+  }
+
+  .music-player {
+    right: unset;
+    bottom: 2vh;
+    scale: .5;
+  }
+
+  .music-player.home text {
+    fill: white;
+  }
+
+  .menu {
+    position: fixed;
+    top: unset;
+    bottom: 30vh;
+    right: 20px;
+    text-align: right;
+    z-index: 1;
+  }
+
+  .menu li {
+    display: flex;
+    height: 2vh;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 2em;
+    padding: 10px 0;
+  }
+
+  .menu li svg {
+    font-size: 1.4em;
+  }
+
+  .menu-bullet {
+    margin: 0;
+    font-size: 1.2em;
+    color: white !important;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .menu li span.menu-label {
+    display: none;
+  }
+
+
+
 }

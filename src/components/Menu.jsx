@@ -1,57 +1,83 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { FaHome, FaUser, FaBriefcase, FaBook } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 import animateText from "../assets/functions/animateText";
+import BigText from "../assets/BigText.json";
 
-import BigText from "../assets/BigText.json"
+// Responsive hook
+function useIsMobile(breakpoint = 600) {
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= breakpoint);
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= breakpoint);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [breakpoint]);
+    return isMobile;
+}
+
 function Menu({ setSelectedPage, selectedPage }) {
+    const navigateTimeout = useRef(null);
+    const navigate = useNavigate();
 
+    const handleClick = (page, topText, mainText, pageNum, route) => {
+        // Cancel any pending navigation
+        if (navigateTimeout.current) {
+            clearTimeout(navigateTimeout.current);
+        }
+        setSelectedPage(page);
+        // animateText should reset/restart animation if interrupted
+        animateText('top-text', topText);
+        animateText('main-text', mainText);
+        animateText('home-num', pageNum);
+        navigateTimeout.current = setTimeout(() => {
+            navigate(route);
+        }, 1000);
+    };
+
+    // Each li gets `selectedPage` class, and the active one also gets `selected`
+    const getClassName = (page) => {
+        let baseClass = `menu-item ${selectedPage}`;
+        if (selectedPage === page) {
+            baseClass += " selected";
+        }
+        return baseClass;
+    };
+
+    // Clean up timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (navigateTimeout.current) {
+                clearTimeout(navigateTimeout.current);
+            }
+        };
+    }, []);
+
+    const isMobile = useIsMobile();
+    // Icon map for menu items
+    const icons = {
+        home: <FaHome size={24} color="white"/>, // You can adjust size
+        about: <FaUser size={24} color="white"/>,
+        works: <FaBriefcase size={24} color="white"/>,
+        guestbook: <FaBook size={24} color="white"/>,
+    };
+    const menuItems = [
+        { key: "home", label: "Home", topText: "DEVELOPER + DESIGNER", mainText: BigText.homeText, pageNum: "00", route: "/" },
+        { key: "about", label: "About", topText: "About Me", mainText: BigText.aboutText, pageNum: "01", route: "/about" },
+        { key: "works", label: "Works", topText: "Works", mainText: BigText.workText, pageNum: "02", route: "/works" },
+        { key: "guestbook", label: "GuestBook", topText: "Guestbook", mainText: BigText.guestbookText, pageNum: "03", route: "/guestbook" },
+    ];
     return (
         <div className="menu">
             <ul>
-                <li
-                    className={selectedPage === "home" ? "selected" + selectedPage : "" + selectedPage}
-                    onClick={() => {
-                        setSelectedPage("home")
-                        animateText('top-text', 'DEVELOPER + DESIGNER')
-                        animateText('main-text', BigText.homeText);
-                        animateText('home-num', '00')
-
-                    }}
-                >
-                    {selectedPage === "home" && "•"} Home
-                </li>
-                <li
-                    className={selectedPage === "about" ? "selected" + selectedPage : "" + selectedPage}
-                    onClick={() => {
-                        setSelectedPage("about");
-                        animateText('top-text', 'About Me')
-                        animateText('main-text', BigText.aboutText);
-                        animateText('home-num', '01')
-                    }}
-                >
-                    {selectedPage === "about" && "•"} About
-                </li>
-                <li
-                    className={selectedPage === "works" ? "selected " + selectedPage : "" + selectedPage}
-                    onClick={() => {
-                        setSelectedPage("works")
-                        animateText('home-num', '02')
-                        animateText('top-text', 'Works')
-                        animateText('main-text', BigText.workText);
-                    }}
-                >
-                    {selectedPage === "works" && "•"} Works
-                </li>
-                <li
-                    className={selectedPage === "guestbook" ? "selected " + selectedPage : "" + selectedPage}
-                    onClick={() => {
-                        setSelectedPage("guestbook")
-                        animateText('home-num', '03')
-                        animateText('top-text', 'Guestbook')
-                        animateText('main-text', BigText.guestbookText);
-                    }}
-                >
-                    {selectedPage === "guestbook" && "•"} GuestBook
-                </li>
+                {menuItems.map(item => (
+                    <li
+                        key={item.key}
+                        className={getClassName(item.key)}
+                        onClick={() => handleClick(item.key, item.topText, item.mainText, item.pageNum, item.route)}
+                    >
+                        {isMobile && selectedPage === item.key && <span className="menu-bullet">•</span>}{isMobile ? icons[item.key] : item.label}
+                    </li>
+                ))}
             </ul>
         </div>
     );
