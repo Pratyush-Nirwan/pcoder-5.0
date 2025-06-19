@@ -1,6 +1,19 @@
+import { useEffect, useState } from 'react';
 import projects from '../assets/Database/Projects.json';
 
 export default function ProjectTree() {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(max-width: 600px)');
+        setIsMobile(mediaQuery.matches);
+
+        const handleResize = (e) => setIsMobile(e.matches);
+        mediaQuery.addListener(handleResize);
+
+        return () => mediaQuery.removeListener(handleResize);
+    }, []);
+
     return (
         <div className="project-display">
             {projects.map((project, i) => {
@@ -14,12 +27,16 @@ export default function ProjectTree() {
                         <div>
                             {prefix} <span className="project-blog-name">{project.name}</span>
                         </div>
-                        <div>
-                            {childPrefix}<span className="features">├─ Overview: {project.overview}</span>
-                        </div>
-                        <div>
-                            {childPrefix}<span className="features">├─ Tech: {project.tech_stack}</span>
-                        </div>
+                        {!isMobile && (
+                            <>
+                                <div>
+                                    {childPrefix}<span className="features">├─ Overview: {project.overview}</span>
+                                </div>
+                                <div>
+                                    {childPrefix}<span className="features">├─ Tech: {project.tech_stack}</span>
+                                </div>
+                            </>
+                        )}
                         <div>
                             {childPrefix}<span className="features">└─ Links:</span>{' '}
                             {demo && (

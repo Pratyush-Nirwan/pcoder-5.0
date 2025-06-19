@@ -453,6 +453,10 @@ html {
   margin: 5px;
 }
 
+#user-msg-div .name-msg {
+  width: 20%;
+}
+
 .name-msg {
   display: flex;
   align-items: center;
@@ -461,10 +465,11 @@ html {
 
 .input-field {
   display: flex;
-  width: max-content;
+  width: 100%;
   outline: none;
   border: 1px solid white;
   height: 25px;
+  background: transparent;
 }
 
 #submit-form {
@@ -655,5 +660,226 @@ button:hover {
   }
 
 
+
+  #left-part.about {
+    width: 100vw;
+    height: 60vh;
+    transform: translateY(30vh);
+    top: 0;
+    rotate: unset;
+
+  }
+
+  #right-part.about {
+    width: 100vw;
+    height: 100vh;
+    right: 0;
+    overflow: hidden;
+    transition: all 1s ease;
+    transform: translateY(0) translateX(0);
+  }
+
+  .reveal-text.about {
+    top: 30vh;
+    left: 50vw;
+    width: 70vw;
+    transform: translateX(-56%) translateY(13%);
+    font-size: 3vw;
+  }
+
+  .lang {
+    transform: translateX(-100%) translateY(-10vh);
+    transition: all 1s ease;
+    right: unset;
+    width: fit-content;
+  }
+
+  .lang.about {
+    display: grid;
+    z-index: 1;
+    font-size: .8em;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 10px;
+    transform: translateX(35vw) translateY(-9vh);
+    color: black;
+  }
+
+  .skills-grid {
+    z-index: 99;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(10px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    text-align: center;
+    width: fit-content;
+    scale: .7;
+    position: absolute;
+    bottom: 65%;
+    left: 2%;
+    mix-blend-mode: difference;
+    opacity: 0;
+    transition: opacity 1s ease, transform 1s ease;
+    transform: translateX(-100%);
+  }
+
+  .skills-grid.about {
+    transform: translateX(-10vw);
+  }
+
+  .page-num.about {
+    position: absolute;
+    margin: 0;
+    font-size: 3em;
+    bottom: 100px;
+    top: unset;
+    transform: translateX(40vw) translateY(-55vh);
+    transition: transform 1s ease;
+  }
+
+  #top-text.about {
+    font-size: 2em;
+    font-weight: bold;
+    transform-origin: left;
+    transform: translateX(5vw) translateY(17.5vh) rotate(0deg);
+    z-index: 1;
+  }
+
+  .music-player.about {
+    right: unset;
+    bottom: 2vh;
+    scale: .5;
+    transform: translateX(100vw);
+  }
+
+
+  #left-part.works {
+    width: 100vw;
+    height: 100vh;
+    transform: translateY(0vh) translateX(-50vw);
+    top: 0;
+    rotate: unset;
+  }
+
+  #right-part.works {
+    width: 100vw;
+    height: 50vh;
+    right: 0;
+    overflow: hidden;
+    transition: all 1s ease;
+    transform: translateY(20vh) translateX(0);
+  }
+
+  .page-num.works {
+    transform: translateX(-23vw) translateY(-65vh);
+  }
+
+  #top-text.works {
+    font-size: 3em;
+
+    transform: translateX(0vw) translateY(50vh) rotate(0deg);
+  }
+
+  .projects-blogs-btns-con {
+    width: 110vw;
+    height: 60vh;
+    top: 10%;
+    right: 0%;
+    scale: .7;
+  }
+
+  .music-player.works {
+    right: unset;
+    bottom: 2vh;
+    scale: .5;
+    transform: translateX(0vw);
+  }
+
+  #right-part.guestbook {
+    width: 100vw;
+    height: 100vh;
+    right: 0;
+    overflow: hidden;
+    transition: all 1s ease;
+    transform: translateY(0vh) translateX(0);
+  }
+
+  #left-part.guestbook {
+    width: 200vw;
+    height: 200%;
+    transform: translateX(-20%);
+    top: 0;
+    z-index: 2;
+    rotate: 45deg;
+  }
+
+  #top-text.guestbook {
+    font-size: 2em;
+    transform: translateY(10vh) translateX(-10vw);
+  }
+
+  .guestbook-table {
+    width: 100vw;
+    scale: .8;
+  }
+
+  .guestbook-table.guestbook {
+    transform: translateX(-30vw);
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #user-msg-div {
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+
+  #login-btn,
+  #logout-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .msg-div {
+    justify-content: unset;
+  }
+
+  .name-msg {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .date {
+    display: none;
+    width: fit-content;
+  }
+
+  #delete-so-btn-div {
+    width: 100%;
+  }
+
+  #user-msg-div .name-msg {
+    width: 100%;
+  }
+
+  .page-num.guestbook {
+    transform: translateX(-15vw) translateY(10vh);
+  }
+
+  .music-player.guestbook {
+    right: unset;
+    bottom: 0vh;
+    scale: .5;
+    transform: translateX(0vw) translateY(-140vh);
+  }
+
+  .music-player.guestbook text {
+    fill: black;
+    transition: fill 1s ease;
+  }
 
 }
