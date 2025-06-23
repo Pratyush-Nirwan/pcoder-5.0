@@ -422,6 +422,36 @@ html {
   cursor: pointer;
 }
 
+.contact-icons {
+  position: absolute;
+  bottom: 0;
+  transform: translateY(50vh) translateX(55vw);
+  opacity: 0;
+  display: flex;
+  z-index: 1;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 1s ease;
+}
+
+.contact-icons.about {
+  opacity: 1;
+  transition: all 1s ease;
+
+  transform: translateY(-10vh) translateX(55vw);
+}
+
+.icon {
+  color: white;
+  mix-blend-mode: difference;
+}
+
+.icon:hover {
+  color: gray;
+}
+
+
+
 .guestbook-table {
   opacity: 0;
   position: fixed;
@@ -663,11 +693,10 @@ button:hover {
 
   #left-part.about {
     width: 100vw;
-    height: 60vh;
+    height: 70vh;
     transform: translateY(30vh);
     top: 0;
     rotate: unset;
-
   }
 
   #right-part.about {
@@ -692,6 +721,15 @@ button:hover {
     transition: all 1s ease;
     right: unset;
     width: fit-content;
+  }
+
+  .contact-icons {
+    flex-direction: row;
+  }
+
+  .contact-icons.about {
+
+    transform: translateX(-18vw) translateY(-25vh);
   }
 
   .lang.about {
