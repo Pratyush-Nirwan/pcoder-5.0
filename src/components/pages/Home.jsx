@@ -12,6 +12,7 @@ import GuestBook from '../Guestbook';
 import BigText from '../../assets/BigText.json';
 import animateText from '../../assets/functions/animateText';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 function formatTextWithLineBreaks(text) {
     return text.split('\n').map((line, index) => (
         <React.Fragment key={index}>
@@ -27,6 +28,10 @@ const Intro = ({ selectedPage }) => {
 
     return (
         <>
+            <Helmet>
+                <title>Home | Pratyush Nirwan</title>
+                <meta name="description" content="Welcome to Pratyush Nirwan’s site — Developer + Designer. Explore projects, blogs & more." />
+            </Helmet>
             <p id='top-text' className={selectedPage}>DEVELOPER + DESIGNER</p>
             <h1 className={"reveal-text " + selectedPage} id='main-text'>Hello World! <br /> I am Pratyush Nirwan</h1>
             <h1 className={"page-num " + selectedPage} id='home-num'>00</h1>
@@ -58,6 +63,10 @@ const About = ({ selectedPage }) => {
 
     return (
         <>
+            <Helmet>
+                <title>About | Pratyush Nirwan</title>
+                <meta name="description" content="Discover Pratyush Nirwan’s journey in tech, design, and creativity." />
+            </Helmet>
             <p id='top-text' className={selectedPage}>About Me</p>
             <h1 className={"reveal-text " + selectedPage} id='main-text'>{formatTextWithLineBreaks(BigText.aboutText)}</h1>
             <h1 className={"page-num " + selectedPage} id='home-num'>01</h1>
@@ -91,6 +100,10 @@ const ProjectsBlogs = ({ selectedPage }) => {
 
     return (
         <>
+            <Helmet>
+                <title>Works | Pratyush Nirwan</title>
+                <meta name="description" content="View Pratyush’s projects in development, design, and innovation." />
+            </Helmet>
             <p id='top-text' className={selectedPage}>Works</p>
             <h1 className={"reveal-text " + selectedPage} id='main-text'>{formatTextWithLineBreaks(BigText.workText)}</h1>
             <h1 className={"page-num " + selectedPage} id='home-num'>02</h1>
@@ -122,6 +135,10 @@ const GuestBookPage = ({ selectedPage }) => {
 
     return (
         <>
+            <Helmet>
+                <title>Guestbook | Pratyush Nirwan</title>
+                <meta name="description" content="Sign or read the guestbook — share your thoughts or connect." />
+            </Helmet>
             <p id='top-text' className={selectedPage}>Guestbook</p>
             <h1 className={"reveal-text " + selectedPage} id='main-text'>
                 {formatTextWithLineBreaks(BigText.guestbookText)}
