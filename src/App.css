@@ -486,9 +486,11 @@ html {
 #user-msg-div .name-msg {
   width: fit-content;
 }
-.name{
+
+.name {
   white-space: nowrap;
 }
+
 .name-msg {
   display: flex;
   align-items: center;
@@ -875,7 +877,8 @@ button:hover {
   }
 
   #login-btn,
-  #logout-btn {
+  #logout-btn,
+  #submit-btn {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -901,6 +904,12 @@ button:hover {
   #delete-so-btn-div {
     width: 100%;
   }
+
+  #submit-form {
+    flex-direction: column;
+    gap: 10px;
+  }
+
 
   #user-msg-div .name-msg {
     width: 100%;
