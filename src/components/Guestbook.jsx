@@ -16,17 +16,21 @@ function GuestBook({ selectedPage }) {
 
   const supabase = useSupabaseClient();
   const [user, setUser] = useState(null);
+  const [usernameLower, setUsernameLower] = useState(null); // Store lowercased username here
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [isCheckingUserMsg, setIsCheckingUserMsg] = useState(false);
 
   // Handle user session changes and OAuth callback
   useEffect(() => {
     console.log('Setting up auth state listener...');
-    
-    // Function to process user data
+
+    // Function to process user data and set lowercase username
     const processUser = (user) => {
       if (!user) {
         setUser(null);
+        setUsernameLower(null);
         setIsAuthenticated(false);
         return;
       }
@@ -39,42 +43,43 @@ function GuestBook({ selectedPage }) {
         user?.email?.split('@')[0] ||
         'anonymous';
 
-      console.log('Setting username to:', username);
-      
+      const lowerUsername = username.toLowerCase();
+      console.log('Setting username to:', username, 'lowercase:', lowerUsername);
+
       const userWithUsername = {
         ...user,
-        username,
+        username: lowerUsername,
         user_metadata: {
           ...user.user_metadata,
-          user_name: username
+          user_name: lowerUsername
         }
       };
-      
+
       console.log('Setting user data:', userWithUsername);
       setUser(userWithUsername);
+      setUsernameLower(lowerUsername);
       setIsAuthenticated(true);
     };
 
-    // Check session and update state
     const checkSession = async () => {
       try {
         console.log('Checking session...');
-        
-        // Get the current session
         const { data: { session }, error: sessionError } = await getSession();
-        
+
         if (sessionError || !session?.user) {
           console.log('No active session found');
           setUser(null);
+          setUsernameLower(null);
           setIsAuthenticated(false);
           return null;
         }
-        
+
         console.log('Session found, getting user...');
         return session.user;
       } catch (error) {
         console.error('Error in session check:', error);
         setUser(null);
+        setUsernameLower(null);
         setIsAuthenticated(false);
         return null;
       } finally {
@@ -82,16 +87,15 @@ function GuestBook({ selectedPage }) {
       }
     };
 
-    // Handle the OAuth redirect flow
     const handleOAuthRedirect = async () => {
       try {
         const { data, error } = await supabase.auth.getSession();
-        
+
         if (error) {
           console.error('Error getting session:', error);
           throw error;
         }
-        
+
         if (data.session) {
           console.log('Processing user from OAuth redirect');
           processUser(data.session.user);
@@ -103,15 +107,13 @@ function GuestBook({ selectedPage }) {
       }
     };
 
-    // Check for existing session on mount
     const initAuth = async () => {
       const user = await checkSession();
       if (user) {
         processUser(user);
       }
       setIsLoading(false);
-      
-      // Handle OAuth redirect if needed
+
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('code') && urlParams.get('next')?.includes('/guestbook')) {
         console.log('Handling OAuth redirect...');
@@ -120,12 +122,11 @@ function GuestBook({ selectedPage }) {
     };
 
     initAuth();
-    
-    // Listen for auth state changes
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('Auth state changed:', event, 'Session:', session);
-        
+
         if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
           console.log('Signed in, processing user...');
           if (session?.user) {
@@ -134,11 +135,12 @@ function GuestBook({ selectedPage }) {
         } else if (event === 'SIGNED_OUT') {
           console.log('User signed out');
           setUser(null);
+          setUsernameLower(null);
           setIsAuthenticated(false);
         }
       }
     );
-    
+
     return () => {
       console.log('Cleaning up auth listener');
       subscription?.unsubscribe();
@@ -162,15 +164,13 @@ function GuestBook({ selectedPage }) {
     try {
       setIsLoading(true);
       console.log('Initiating sign out...');
-      
-      // First try to sign out properly
+
       const { error: signOutError } = await supabase.auth.signOut();
-      
+
       if (signOutError) {
         console.warn('Error during sign out (will force clear):', signOutError.message);
       }
-      
-      // Force clear any remaining auth state
+
       try {
         await supabase.auth.getSession().then(({ data: { session } }) => {
           if (session) {
@@ -181,14 +181,13 @@ function GuestBook({ selectedPage }) {
       } catch (cleanupError) {
         console.warn('Error during session cleanup:', cleanupError.message);
       }
-      
-      // Clear local state
+
       setUser(null);
+      setUsernameLower(null);
       setIsAuthenticated(false);
-      
-      // Clear any stored tokens
+
       localStorage.removeItem('sb-auth-token');
-      
+
       console.log('Sign out completed');
     } catch (error) {
       console.error("Error during sign out:", error.message);
@@ -213,11 +212,11 @@ function GuestBook({ selectedPage }) {
   const userRef = useRef(null);
 
   useEffect(() => {
-    if (isAuthenticated && user) {
+    if (isAuthenticated && usernameLower) {
       userRef.current = user;
+      setIsCheckingUserMsg(true);
       (async () => {
         try {
-          const usernameLower = user.username.toLowerCase();
           const exists = await checkUsernameExists(usernameLower);
 
           if (exists) {
@@ -231,10 +230,15 @@ function GuestBook({ selectedPage }) {
         } catch (error) {
           console.error("Error checking user message:", error);
           setIsMsgExists(false);
+        } finally {
+          setIsCheckingUserMsg(false);
         }
       })();
+    } else {
+      setIsMsgExists(false);
+      setUserMessage(null);
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, usernameLower]);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -254,8 +258,6 @@ function GuestBook({ selectedPage }) {
     if (newMessage.trim() === "") return;
 
     try {
-      const usernameLower = user.username.toLowerCase();
-
       const realmUser = await app.logIn(Realm.Credentials.anonymous());
       const mongo = realmUser.mongoClient("mongodb-atlas");
       const collection = mongo.db("PCODER-ME").collection("guestbook");
@@ -359,10 +361,10 @@ function GuestBook({ selectedPage }) {
       const realmUser = await app.logIn(Realm.Credentials.anonymous());
       const mongo = realmUser.mongoClient("mongodb-atlas");
       const collection = mongo.db("PCODER-ME").collection("guestbook");
-      const usernameLower = username.toLowerCase();
+      const usernameLowerDel = username.toLowerCase();
 
-      await collection.deleteOne({ username: usernameLower });
-      setMessages(messages.filter((msg) => msg.username !== usernameLower));
+      await collection.deleteOne({ username: usernameLowerDel });
+      setMessages(messages.filter((msg) => msg.username !== usernameLowerDel));
       setUserMessage(null);
       setIsMsgExists(false);
     } catch (error) {
@@ -385,11 +387,11 @@ function GuestBook({ selectedPage }) {
               <FaGithub size={15} /> SignIn with GitHub
             </button>
           </div>
-        ) : !isMsgExists ? (
+        ) : isCheckingUserMsg ? (
           <div id="user-msg-div">
             <h5 className="name-msg">
               <span className="name">
-                ~/{formatString(user.username, 15, true)}:
+                ~/{formatString(usernameLower, 15, true)}:
               </span>
               <CgSpinner className="spinner" />
             </h5>
@@ -403,18 +405,52 @@ function GuestBook({ selectedPage }) {
               </button>
             </div>
           </div>
+        ) : !isMsgExists ? (
+          <div id="user-msg-div">
+            <h5 className="name-msg">
+              <span className="name">
+                ~/{formatString(usernameLower, 15, true)}:
+              </span>
+            </h5>
+            <form onSubmit={handleSubmit} id="submit-form">
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                className="input-field text"
+                placeholder="Write your message here..."
+              />
+              <div id="btns-div">
+                <button
+                  type="submit"
+                  className="button text submit"
+                  id="submit-btn"
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="button text"
+                  id="logout-btn"
+                >
+                  SignOut
+                </button>
+              </div>
+            </form>
+          </div>
         ) : userMessage ? (
           <div id="user-msg-div">
             <h5 className="name-msg">
               <span className="name">
-                ~/{formatString(user.username, 15, true)}:
+                ~/{formatString(usernameLower, 15, true)}:
               </span>
               {formatString("\u00A0" + userMessage, 50, false)}
             </h5>
             <div id="delete-so-btn-div">
               <TiDelete
                 onClick={() => {
-                  handleDelete(user.username);
+                  handleDelete(usernameLower);
                 }}
                 size={30}
                 id="delete-btn"
@@ -432,7 +468,7 @@ function GuestBook({ selectedPage }) {
           <div id="user-msg-div">
             <h5 className="name-msg">
               <span className="name">
-                ~/{formatString(user.username, 15, true)}:
+                ~/{formatString(usernameLower, 15, true)}:
               </span>
             </h5>
             <form onSubmit={handleSubmit} id="submit-form">
@@ -465,7 +501,11 @@ function GuestBook({ selectedPage }) {
         )}
       </div>
 
-      {isLoaded ? <UpdateMessages /> : <CgSpinner size={20} className="spinner" />}
+      {isLoaded ? (
+        <UpdateMessages />
+      ) : (
+        <CgSpinner size={20} className="spinner" />
+      )}
     </div>
   );
 }
