@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Homepage (highest priority) -->
   <url>
     <loc>https://www.pcoder.me/</loc>
+    <lastmod>2025-08-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
   </url>
+  
+  <!-- About page -->
   <url>
     <loc>https://www.pcoder.me/about</loc>
+    <lastmod>2025-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
+  
+  <!-- Works/Projects page -->
   <url>
     <loc>https://www.pcoder.me/works</loc>
+    <lastmod>2025-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
+  
+  <!-- Guestbook page -->
   <url>
     <loc>https://www.pcoder.me/guestbook</loc>
+    <lastmod>2025-08-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

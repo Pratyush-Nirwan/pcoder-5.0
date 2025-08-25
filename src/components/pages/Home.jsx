@@ -232,22 +232,58 @@ function Home() {
     const [language, setLanguage] = useState('en');
     const location = useLocation();
 
-    useEffect(() => {
-        if (location.pathname === '/') {
-            setSelectedPage('home');
-        } else if (location.pathname === '/about') {
-            setSelectedPage('about');
-        } else if (location.pathname === '/works') {
-            setSelectedPage('works');
-        } else if (location.pathname === '/guestbook') {
-            setSelectedPage('guestbook');
-        } else {
-            setSelectedPage(location.pathname.replace('/', ''));
+    // Page metadata configuration
+    const pageMetadata = {
+        home: {
+            title: 'Pratyush Nirwan | Developer + Designer',
+            description: 'Personal portfolio of Pratyush Nirwan - Developer and Designer. Explore my projects, blogs, and more.',
+            url: 'https://www.pcoder.me'
+        },
+        about: {
+            title: 'About | Pratyush Nirwan',
+            description: 'Learn more about Pratyush Nirwan - skills, experience, and background in development and design.',
+            url: 'https://www.pcoder.me/about'
+        },
+        works: {
+            title: 'Works | Pratyush Nirwan',
+            description: 'Explore the portfolio and projects of Pratyush Nirwan - Web Developer and Designer.',
+            url: 'https://www.pcoder.me/works'
+        },
+        guestbook: {
+            title: 'Guestbook | Pratyush Nirwan',
+            description: 'Leave a message in Pratyush Nirwan\'s guestbook. Connect and share your thoughts.',
+            url: 'https://www.pcoder.me/guestbook'
         }
+    };
+
+    // Update selected page based on route
+    useEffect(() => {
+        const path = location.pathname.replace('/', '') || 'home';
+        setSelectedPage(path);
     }, [location.pathname]);
+
+    // Get current page metadata
+    const currentPage = pageMetadata[selectedPage] || pageMetadata.home;
 
     return (
         <>
+            <Helmet>
+                <title>{currentPage.title}</title>
+                <meta name="description" content={currentPage.description} />
+                <link rel="canonical" href={currentPage.url} />
+                
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content={currentPage.url} />
+                <meta property="og:title" content={currentPage.title} />
+                <meta property="og:description" content={currentPage.description} />
+
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:url" content={currentPage.url} />
+                <meta name="twitter:title" content={currentPage.title} />
+                <meta name="twitter:description" content={currentPage.description} />
+            </Helmet>
             <div id='main-body'>
                 {/* Background */}
                 <div id='bg-main' className={selectedPage}>
