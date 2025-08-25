@@ -484,9 +484,11 @@ html {
 }
 
 #user-msg-div .name-msg {
-  width: 100%;
+  width: fit-content;
 }
-
+.name{
+  white-space: nowrap;
+}
 .name-msg {
   display: flex;
   align-items: center;
@@ -495,11 +497,12 @@ html {
 
 .input-field {
   display: flex;
-  width: 100%;
   outline: none;
-  border: 1px solid white;
+  border: none;
   height: 25px;
   background: transparent;
+  width: 100%;
+  padding-left: 10px;
 }
 
 #submit-form {
