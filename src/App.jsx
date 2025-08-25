@@ -5,7 +5,16 @@ import { supabase } from './lib/supabase';
 
 function App() {
   return (
-    <SessionContextProvider supabaseClient={supabase}>
+    <SessionContextProvider 
+      supabaseClient={supabase}
+      initialSession={null}
+      options={{
+        detectSessionInUrl: true,
+        persistSession: true,
+        autoRefreshToken: true,
+        debug: true
+      }}
+    >
       <Home />
     </SessionContextProvider>
   );

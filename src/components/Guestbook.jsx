@@ -5,7 +5,8 @@ import { CgSpinner } from "react-icons/cg";
 import { TiDelete } from "react-icons/ti";
 import { setCookie } from "../assets/functions/cookieUtils";
 import React from "react";
-import { useSupabaseClient, useSession } from "@supabase/auth-helpers-react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { signInWithGitHub, signOut, getSession, getCurrentUser } from "../lib/supabase";
 
 // MongoDB Realm App
 const app = new Realm.App({ id: "guestbook-djqwpto" });
@@ -14,63 +15,185 @@ function GuestBook({ selectedPage }) {
   setCookie("page", "guestbook");
 
   const supabase = useSupabaseClient();
-  const session = useSession();
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Handle user session changes
+  // Handle user session changes and OAuth callback
   useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (session?.user) {
-        const { data: { user } } = await supabase.auth.getUser();
-
-        // Extract GitHub username only (no email)
-        const username =
-          user?.user_metadata?.user_name ||
-          session.user.user_metadata?.user_name ||
-          "anonymous";
-
-        setUser({
-          ...session.user,
-          username,
-        });
-        setIsAuthenticated(true);
-      } else {
+    console.log('Setting up auth state listener...');
+    
+    // Function to process user data
+    const processUser = (user) => {
+      if (!user) {
         setUser(null);
         setIsAuthenticated(false);
+        return;
+      }
+
+      // Extract GitHub username
+      const username =
+        user?.user_metadata?.user_name ||
+        user?.user_metadata?.preferred_username ||
+        user?.user_metadata?.full_name?.split(' ')[0] ||
+        user?.email?.split('@')[0] ||
+        'anonymous';
+
+      console.log('Setting username to:', username);
+      
+      const userWithUsername = {
+        ...user,
+        username,
+        user_metadata: {
+          ...user.user_metadata,
+          user_name: username
+        }
+      };
+      
+      console.log('Setting user data:', userWithUsername);
+      setUser(userWithUsername);
+      setIsAuthenticated(true);
+    };
+
+    // Check session and update state
+    const checkSession = async () => {
+      try {
+        console.log('Checking session...');
+        
+        // Get the current session
+        const { data: { session }, error: sessionError } = await getSession();
+        
+        if (sessionError || !session?.user) {
+          console.log('No active session found');
+          setUser(null);
+          setIsAuthenticated(false);
+          return null;
+        }
+        
+        console.log('Session found, getting user...');
+        return session.user;
+      } catch (error) {
+        console.error('Error in session check:', error);
+        setUser(null);
+        setIsAuthenticated(false);
+        return null;
+      } finally {
+        console.log('Session check complete');
+      }
+    };
+
+    // Handle the OAuth redirect flow
+    const handleOAuthRedirect = async () => {
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Error getting session:', error);
+          throw error;
+        }
+        
+        if (data.session) {
+          console.log('Processing user from OAuth redirect');
+          processUser(data.session.user);
+        }
+      } catch (error) {
+        console.error('Error in OAuth redirect handling:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // Check for existing session on mount
+    const initAuth = async () => {
+      const user = await checkSession();
+      if (user) {
+        processUser(user);
       }
       setIsLoading(false);
-    });
+      
+      // Handle OAuth redirect if needed
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('code') && urlParams.get('next')?.includes('/guestbook')) {
+        console.log('Handling OAuth redirect...');
+        handleOAuthRedirect();
+      }
+    };
 
-    return () => subscription.unsubscribe();
+    initAuth();
+    
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('Auth state changed:', event, 'Session:', session);
+        
+        if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
+          console.log('Signed in, processing user...');
+          if (session?.user) {
+            processUser(session.user);
+          }
+        } else if (event === 'SIGNED_OUT') {
+          console.log('User signed out');
+          setUser(null);
+          setIsAuthenticated(false);
+        }
+      }
+    );
+    
+    return () => {
+      console.log('Cleaning up auth listener');
+      subscription?.unsubscribe();
+    };
   }, [supabase]);
 
   const handleLogin = async () => {
     try {
-        const { error } = await supabase.auth.signInWithOAuth({
-            provider: "github",
-            options: {
-              redirectTo: window.location.origin + "/guestbook",
-              scopes: "read:user", // Only ask for profile
-            },
-          });
-          
+      console.log('Initiating GitHub OAuth...');
+      setIsLoading(true);
+      const { error } = await signInWithGitHub();
       if (error) throw error;
+      console.log('OAuth flow initiated');
     } catch (error) {
       console.error("Error signing in with GitHub:", error.message);
+      setIsLoading(false);
     }
   };
 
   const handleLogout = async () => {
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-      window.location.href = window.location.origin + "/guestbook";
+      setIsLoading(true);
+      console.log('Initiating sign out...');
+      
+      // First try to sign out properly
+      const { error: signOutError } = await supabase.auth.signOut();
+      
+      if (signOutError) {
+        console.warn('Error during sign out (will force clear):', signOutError.message);
+      }
+      
+      // Force clear any remaining auth state
+      try {
+        await supabase.auth.getSession().then(({ data: { session } }) => {
+          if (session) {
+            console.log('Force clearing session');
+            return supabase.auth.signOut({ scope: 'local' });
+          }
+        });
+      } catch (cleanupError) {
+        console.warn('Error during session cleanup:', cleanupError.message);
+      }
+      
+      // Clear local state
+      setUser(null);
+      setIsAuthenticated(false);
+      
+      // Clear any stored tokens
+      localStorage.removeItem('sb-auth-token');
+      
+      console.log('Sign out completed');
     } catch (error) {
-      console.error("Error signing out:", error.message);
+      console.error("Error during sign out:", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
