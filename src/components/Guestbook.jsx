@@ -283,7 +283,7 @@ function GuestBook({ selectedPage }) {
               sign-in to leave a message!
             </h5>
             <button onClick={handleLogin} className="button" id="login-btn">
-              <FaGithub size={15} /> SignIn with GitHub
+              <FaGithub size={15} /> SignIn
             </button>
           </div>
         ) : isCheckingUserMsg ? (
