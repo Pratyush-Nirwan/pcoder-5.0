@@ -75,7 +75,8 @@ function Menu({ setSelectedPage, selectedPage }) {
                         className={getClassName(item.key)}
                         onClick={() => handleClick(item.key, item.topText, item.mainText, item.pageNum, item.route)}
                     >
-                        {isMobile && selectedPage === item.key && <span className="menu-bullet">•</span>}{isMobile ? icons[item.key] : item.label}
+                        {selectedPage === item.key && <span className="menu-bullet" style={{ paddingRight: '8px' }}>•</span>}
+                        {isMobile ? icons[item.key] : item.label}
                     </li>
                 ))}
             </ul>
