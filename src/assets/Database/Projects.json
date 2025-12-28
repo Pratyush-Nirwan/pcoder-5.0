@@ -1,5 +1,14 @@
 [
     {
+        "name": "Save Stride",
+        "overview": "App to track saving goals.",
+        "tech_stack": "React, JavaScript, HTML5, Tailwind CSS, Vite",
+        "links": {
+            "github": "https://github.com/Pratyush-Nirwan/save-stride",
+            "demo": "https://save-stride.vercel.app/"
+        }
+    },
+    {
         "name": "Encrypt Decrypt",
         "overview": "Encrypt and decrypt text messages easily.",
         "tech_stack": "React, JavaScript, HTML5",
