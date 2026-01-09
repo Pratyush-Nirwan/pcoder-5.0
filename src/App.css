@@ -181,20 +181,33 @@ html {
 .menu {
   position: absolute;
   top: 0;
-  right: 20px;
-  text-align: right;
+right: 0;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
+.menu ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+}
 
 .menu li {
   list-style-type: none;
   color: black;
-  margin-bottom: 5px;
+  margin: 2px 0;
+  padding: 2px 10px;
   cursor: pointer;
   mix-blend-mode: difference;
-  transition: color 1s ease;
+  transition: all 0.3s ease;
   text-align: right;
+  width: auto;
+  white-space: nowrap;
 }
 
 .menu li svg {
@@ -202,17 +215,32 @@ html {
 }
 
 
-
 .menu li.works {
   color: white;
 }
-
+.menu li.works.selected{
+  color: black;
+}
 .menu li.guestbook {
   color: white;
 }
+.menu li.guestbook.selected{
+  color: black;
+}
+
+.menu li.selected{
+ border-radius: 100px;
+}
 
 .selected {
-  list-style-type: disc;
+  padding: 2px;
+  background: white ;
+  color: black ;
+  list-style-type: none ;
+}
+
+.menu-bullet {
+  display: none ;
 }
 
 .music-player {
@@ -327,6 +355,63 @@ html {
 .projects-blogs-con {
   display: flex;
   overflow: scroll;
+  position: relative;
+  min-height: 200px;
+}
+
+/* Loading and Error States */
+.loading-container,
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+}
+
+.loading-container .spinner {
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message p {
+  margin-bottom: 1rem;
+}
+
+.retry-button {
+  display: flex;
+  gap: 5px;
+  height: fit-content;
+  padding: 5px;
+  border-radius: 0;
+  border: 1px solid white;
+  background-color: white;
+  color: black;
+  outline: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  margin-top: 1rem;
+  transition: all 0.2s;
+}
+
+.retry-button:hover {
+  border: 1px solid white;
+  background-color: transparent;
+  color: white;
 }
 
 .projects-blogs-btns-con.works {
@@ -670,11 +755,12 @@ button:hover {
 
   .menu li {
     display: flex;
-    height: 2vh;
+    height: auto;
     align-items: center;
     justify-content: flex-end;
-    font-size: 2em;
-    padding: 10px 0;
+    font-size: 1.5em;
+    padding: 5px 10px;
+    margin: 0;
   }
 
   .menu li svg {

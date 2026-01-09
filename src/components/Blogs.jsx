@@ -1,23 +1,49 @@
 import React, { useEffect, useState } from 'react';
+import { CgSpinner } from 'react-icons/cg';
 
 export default function BlogTree() {
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetch('https://dev.to/api/articles?username=pratyushnirwan')
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Failed to fetch blogs');
+                }
+                return res.json();
+            })
             .then((data) => {
                 setBlogs(data);
                 setLoading(false);
             })
             .catch((error) => {
                 console.error('Error fetching blogs:', error);
+                setError(error.message);
                 setLoading(false);
             });
     }, []);
 
-    if (loading) return <p>Loading blogs...</p>;
+    if (loading) {
+        return (
+            <div className="loading-container">
+                <CgSpinner className="spinner" />
+                <p>Loading blogs...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="error-message">
+                <p>Error loading blogs. Please try again later.</p>
+                <button onClick={() => window.location.reload()} className="retry-button">
+                    Retry
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div className="blog-display">

@@ -1,14 +1,11 @@
 import { FaGithub } from "react-icons/fa";
-import * as Realm from "realm-web";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { CgSpinner } from "react-icons/cg";
 import { TiDelete } from "react-icons/ti";
 import { setCookie } from "../assets/functions/cookieUtils";
 import React from "react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { signInWithGitHub, getSession } from "../lib/supabase";
-
-const app = new Realm.App({ id: "guestbook-djqwpto" });
 
 function GuestBook({ selectedPage }) {
   setCookie("page", "guestbook");
@@ -141,6 +138,7 @@ function GuestBook({ selectedPage }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMsgExists, setIsMsgExists] = useState(false);
   const [userMessage, setUserMessage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated && usernameLower) {
@@ -170,69 +168,109 @@ function GuestBook({ selectedPage }) {
 
   useEffect(() => {
     const fetchMessages = async () => {
-      const user = await app.logIn(Realm.Credentials.anonymous());
-      const mongo = user.mongoClient("mongodb-atlas");
-      const collection = mongo.db("PCODER-ME").collection("guestbook");
-      const messages = await collection.find();
-      setMessages(messages);
-      setIsLoaded(true);
+      try {
+        const { data, error } = await supabase
+          .from('guestbook')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        setMessages(data || []);
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+      } finally {
+        setIsLoaded(true);
+      }
     };
     fetchMessages();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!newMessage.trim()) return;
-
+    if (!newMessage.trim() || isSubmitting) return;
+    
+    setIsSubmitting(true);
+    
     try {
-      const realmUser = await app.logIn(Realm.Credentials.anonymous());
-      const mongo = realmUser.mongoClient("mongodb-atlas");
-      const collection = mongo.db("PCODER-ME").collection("guestbook");
+      const messageData = {
+        username: usernameLower,
+        message: newMessage,
+        created_at: new Date().toISOString()
+      };
 
-      const newMsg = { username: usernameLower, message: newMessage, date: new Date() };
+      const { data: existingMessage, error: fetchError } = await supabase
+        .from('guestbook')
+        .select('*')
+        .eq('username', usernameLower)
+        .single();
 
-      const existingMessage = await collection.findOne({ username: usernameLower });
       if (existingMessage) {
-        await collection.updateOne(
-          { username: usernameLower },
-          { $set: { message: newMessage, date: new Date() } }
-        );
-        setMessages(messages.map(msg => msg.username === usernameLower ? {...msg, message: newMessage, date: new Date()} : msg));
+        // Update existing message
+        const { error } = await supabase
+          .from('guestbook')
+          .update({
+            message: newMessage,
+            created_at: new Date().toISOString()
+          })
+          .eq('username', usernameLower);
+          
+        if (error) throw error;
+        
+        setMessages(messages.map(msg => 
+          msg.username === usernameLower 
+            ? { ...msg, message: newMessage, created_at: new Date().toISOString() } 
+            : msg
+        ));
       } else {
-        await collection.insertOne(newMsg);
-        setMessages([...messages, newMsg]);
+        // Insert new message
+        const { data, error } = await supabase
+          .from('guestbook')
+          .insert([messageData])
+          .select()
+          .single();
+          
+        if (error) throw error;
+        
+        setMessages([data, ...messages]);
       }
 
       setNewMessage("");
       setUserMessage(newMessage);
       setIsMsgExists(true);
-    } catch {}
+    } catch (error) {
+      console.error('Error submitting message:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const checkUsernameExists = async (nickname) => {
-    const user = await app.logIn(Realm.Credentials.anonymous());
-    const mongo = user.mongoClient("mongodb-atlas");
-    const collection = mongo.db("PCODER-ME").collection("guestbook");
-    const result = await collection.findOne({ username: nickname });
-    return result !== null;
+    const { data, error } = await supabase
+      .from('guestbook')
+      .select('*')
+      .eq('username', nickname)
+      .single();
+      
+    return !!data;
   };
 
   const getUserData = async (nickname) => {
-    const user = await app.logIn(Realm.Credentials.anonymous());
-    const mongo = user.mongoClient("mongodb-atlas");
-    const collection = mongo.db("PCODER-ME").collection("guestbook");
-    const result = await collection.findOne({ username: nickname });
-    return result;
+    const { data, error } = await supabase
+      .from('guestbook')
+      .select('*')
+      .eq('username', nickname)
+      .single();
+      
+    return data || null;
   };
 
   const UpdateMessages = ({ userToExclude }) => {
     const filteredMessages = messages.filter(msg => msg.username !== userToExclude);
-    const orderedMessages = filteredMessages.slice().reverse();
 
     return (
       <>
-        {orderedMessages.map((msg, index) => {
-          const date = new Date(msg.date);
+        {filteredMessages.map((msg, index) => {
+          const date = new Date(msg.created_at);
           const month = String(date.getMonth() + 1).padStart(2, "0");
           const day = String(date.getDate()).padStart(2, "0");
           const year = date.getFullYear();
@@ -263,14 +301,19 @@ function GuestBook({ selectedPage }) {
 
   const handleDelete = async (username) => {
     try {
-      const realmUser = await app.logIn(Realm.Credentials.anonymous());
-      const mongo = realmUser.mongoClient("mongodb-atlas");
-      const collection = mongo.db("PCODER-ME").collection("guestbook");
-      await collection.deleteOne({ username });
+      const { error } = await supabase
+        .from('guestbook')
+        .delete()
+        .eq('username', username);
+        
+      if (error) throw error;
+      
       setMessages(messages.filter(msg => msg.username !== username));
       setUserMessage(null);
       setIsMsgExists(false);
-    } catch {}
+    } catch (error) {
+      console.error('Error deleting message:', error);
+    }
   };
 
   return (
@@ -300,6 +343,9 @@ function GuestBook({ selectedPage }) {
           </div>
         ) : !isMsgExists ? (
           <div id="user-msg-div">
+          
+          
+          
             <h5 className="name-msg">
               <span className="name">~/{formatString(usernameLower, 15, true)}:</span>
             </h5>
