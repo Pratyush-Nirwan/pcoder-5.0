@@ -26,7 +26,7 @@
 	<img src="https://img.shields.io/badge/Vite-646CFF.svg?style=flat&logo=Vite&logoColor=white" alt="Vite">
 </p>
 
----
+
 
 ## 🔗 Quick Links
 
@@ -36,7 +36,7 @@
 > - [📜 Usage & Attribution](#-usage--attribution)
 > - [📄 License](#-license)
 
----
+
 
 ## 📍 Overview
 
@@ -44,7 +44,7 @@
 PCODER 5.0 is a modern, responsive personal portfolio website built to
 showcase projects, skills, and my journey as a web developer.
 
----
+
 
 ## ✨ Features
 
@@ -53,7 +53,6 @@ showcase projects, skills, and my journey as a web developer.
 - **Fast & Lightweight** – Powered by Vite
 - **Responsive Design** – Works across all devices
 
----
 
 ## 🚀 Getting Started
 
