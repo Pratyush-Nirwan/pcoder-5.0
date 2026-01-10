@@ -42,18 +42,16 @@
 
 **PCODER 5.0** is my **personal developer portfolio**, designed to showcase my skills, projects, and journey as a developer.
 
-The portfolio focuses on a **clean UI**, **fast performance**, and **minimal distractions**, allowing visitors to focus on the content rather than the chrome. It is built with modern tools and follows best practices in frontend development.
-
+PCODER 5.0 is a modern, responsive personal portfolio website built to
+showcase projects, skills, and my journey as a web developer.
 ---
 
 ## ✨ Features
 
 - **Personal Portfolio Layout** – Showcases projects, skills, and profile
-- **Clean & Minimal UI** – Simple, focused design
+- **Clean & Minimal UI** – Modern and unique design,
 - **Fast & Lightweight** – Powered by Vite
-- **Modern Stack** – React + JavaScript
 - **Responsive Design** – Works across all devices
-- **Easy Customization** – Well-structured codebase
 
 ---
 

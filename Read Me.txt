@@ -1,0 +1,93 @@
+PCODER 5.0
+Personal Developer Portfolio
+
+PCODER 5.0 is a modern, responsive personal portfolio website built to
+showcase projects, skills, and my journey as a web developer.
+
+--------------------------------------------------
+
+FEATURES
+
+- Clean and minimal user interface
+- Fully responsive design (mobile, tablet, desktop)
+- Fast development and build using Vite
+- Built with modern React architecture
+- Easy to modify and extend
+- Suitable for personal branding and portfolios
+
+--------------------------------------------------
+
+TECH STACK
+
+- React
+- JavaScript
+- Vite
+- HTML
+- CSS
+
+--------------------------------------------------
+
+INSTALLATION & SETUP
+
+1. Clone the repository
+
+   git clone https://github.com/Pratyush-Nirwan/pcoder-5.0
+
+2. Navigate into the project folder
+
+   cd pcoder-5.0
+
+3. Install dependencies
+
+   npm install
+
+4. Start the development server
+
+   npm run dev
+
+5. Open your browser and visit
+
+   http://localhost:5173
+
+--------------------------------------------------
+
+USAGE & ATTRIBUTION
+
+You are allowed to use this project for learning or as a base for your
+own portfolio.
+
+If you reuse or modify this project, proper credit must be given to
+the original creator:
+
+Original project by:
+Pratyush Nirwan
+https://github.com/Pratyush-Nirwan/pcoder-5.0
+
+Please replace all personal content, branding, and details before using
+it publicly.
+
+--------------------------------------------------
+
+LICENSE
+
+This project is licensed under the MIT License.
+
+You are free to use, modify, and distribute this project with
+attribution. See the LICENSE file for full details.
+
+--------------------------------------------------
+
+LIVE DEMO
+
+https://www.pcoder.me
+
+--------------------------------------------------
+
+AUTHOR
+
+Pratyush Nirwan
+GitHub: https://github.com/Pratyush-Nirwan
+
+--------------------------------------------------
+
+END OF FILE
