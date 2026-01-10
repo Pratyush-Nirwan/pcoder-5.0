@@ -41,9 +41,9 @@
 ## 📍 Overview
 
 **PCODER 5.0** is my **personal developer portfolio**, designed to showcase my skills, projects, and journey as a developer.
-
 PCODER 5.0 is a modern, responsive personal portfolio website built to
 showcase projects, skills, and my journey as a web developer.
+
 ---
 
 ## ✨ Features
