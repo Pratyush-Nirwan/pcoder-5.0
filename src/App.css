@@ -181,7 +181,7 @@ html {
 .menu {
   position: absolute;
   top: 0;
-right: 0;
+  right: 0;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -218,29 +218,32 @@ right: 0;
 .menu li.works {
   color: white;
 }
-.menu li.works.selected{
-  color: black;
-}
-.menu li.guestbook {
-  color: white;
-}
-.menu li.guestbook.selected{
+
+.menu li.works.selected {
   color: black;
 }
 
-.menu li.selected{
- border-radius: 100px;
+.menu li.guestbook {
+  color: white;
+}
+
+.menu li.guestbook.selected {
+  color: black;
+}
+
+.menu li.selected {
+  border-radius: 100px;
 }
 
 .selected {
   padding: 2px;
-  background: white ;
-  color: black ;
-  list-style-type: none ;
+  background: white;
+  color: black;
+  list-style-type: none;
 }
 
 .menu-bullet {
-  display: none ;
+  display: none;
 }
 
 .music-player {
@@ -780,6 +783,9 @@ button:hover {
   }
 
 
+  .menu-item.selected * {
+    color: black;
+  }
 
   #left-part.about {
     width: 100vw;
